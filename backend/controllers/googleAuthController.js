@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const crypto = require('crypto');
+const { signOAuthState, verifyOAuthState } = require('../utils/oauthState');
 const generateToken = (id, role) => {
   return jwt.sign(
     { id, role },
@@ -12,17 +13,6 @@ const generateToken = (id, role) => {
 // In-memory storage for redirect tokens (development only)
 // Maps redirect_token -> { jwt, expiresAt }
 const googleOAuthTokens = new Map();
-
-// In-memory storage for OAuth CSRF state (development only).
-// Maps state -> expiresAt (ms). Single-use and short-lived.
-const googleOAuthStates = new Map();
-
-const storeOAuthState = () => {
-  const state = crypto.randomBytes(16).toString('hex');
-  googleOAuthStates.set(state, Date.now() + 120000);
-  setTimeout(() => googleOAuthStates.delete(state), 120000);
-  return state;
-};
 
 const generateRedirectToken = (jwt, expiresInMs = 120000) => {
   const token = crypto.randomBytes(32).toString('hex');
@@ -62,8 +52,17 @@ const googleAuthInit = (req, res) => {
     prompt: 'select_account'
   });
 
-  // CSRF protection: unpredictable, single-use, short-lived state.
-  const state = storeOAuthState();
+  // CSRF protection: unpredictable, short-lived, HMAC-signed stateless state.
+  // No process-memory storage so verification survives restarts/scale.
+  let state;
+  try {
+    state = signOAuthState(process.env.JWT_SECRET);
+  } catch (_) {
+    return res.status(500).json({
+      success: false,
+      message: 'Server error during Google authentication. Please try again.'
+    });
+  }
   params.set('state', state);
 
   const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?${params}`;
@@ -87,16 +86,9 @@ const googleAuthCallback = async (req, res) => {
       });
     }
 
-    // Validate OAuth state (CSRF protection) — must be present, known, and unexpired.
-    if (!state || !googleOAuthStates.has(state)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid OAuth state'
-      });
-    }
-    const stateExpiresAt = googleOAuthStates.get(state);
-    googleOAuthStates.delete(state); // single-use
-    if (Date.now() > stateExpiresAt) {
+    // Validate OAuth state (CSRF protection) — stateless HMAC verification.
+    // Must be present, well-formed, correctly signed, and unexpired.
+    if (!state || !verifyOAuthState(state, process.env.JWT_SECRET)) {
       return res.status(400).json({
         success: false,
         message: 'Invalid OAuth state'

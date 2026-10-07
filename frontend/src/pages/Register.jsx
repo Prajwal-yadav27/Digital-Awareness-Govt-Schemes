@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import { API_BASE_URL } from '../services/api';
 import { lazy, Suspense } from 'react';
 const Government3DScene = lazy(() => import('../components/Government3DScene'));
 
@@ -219,7 +220,7 @@ const Register = () => {
               <div className="social-buttons">
                 <button
                   className="btn-social btn-google"
-                  onClick={() => window.location.href = '/api/auth/google'}
+                  onClick={() => window.location.href = `${API_BASE_URL}/auth/google`}
                   aria-label="Register with Google"
                 >
                   <svg className="social-icon-svg" viewBox="0 0 24 24" aria-hidden="true">
@@ -232,7 +233,7 @@ const Register = () => {
 
                 <button
                   className="btn-social btn-x"
-                  onClick={() => window.location.href = '/api/auth/twitter'}
+                  onClick={() => window.location.href = `${API_BASE_URL}/auth/twitter`}
                   aria-label="Register with X"
                 >
                   <svg className="social-icon-svg" viewBox="0 0 24 24" aria-hidden="true">

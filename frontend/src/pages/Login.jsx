@@ -48,7 +48,7 @@ const Login = () => {
 
     if (redirectToken) {
       // Exchange redirect token for JWT via backend endpoint
-      fetch(`/api/auth/google/exchange?rt=${redirectToken}`)
+      fetch(`${API_BASE_URL}/auth/google/exchange?rt=${encodeURIComponent(redirectToken)}`)
         .then(async (resp) => {
           const data = await resp.json();
 
