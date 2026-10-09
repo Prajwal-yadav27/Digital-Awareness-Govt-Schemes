@@ -11,6 +11,16 @@ const protect = async (req, res, next) => {
     try {
       token = req.headers.authorization.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      // OAuth exchange tokens ("rt") are short-lived, audience-bound
+      // single-purpose tokens and must never authorize ordinary API calls.
+      // Reject them explicitly with the standard invalid-token response.
+      if (decoded && (decoded.aud === 'oauth-exchange' || decoded.purpose === 'oauth-exchange')) {
+        return res.status(401).json({
+          success: false,
+          message: 'Invalid authentication token. Please login again.',
+          errorCode: 'TOKEN_INVALID'
+        });
+      }
       const user = await User.findById(decoded.id).select('-password');
 
       if (!user) {

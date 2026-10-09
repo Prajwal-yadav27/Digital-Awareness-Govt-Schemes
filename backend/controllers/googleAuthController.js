@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const crypto = require('crypto');
 const { signOAuthState, verifyOAuthState } = require('../utils/oauthState');
+const { signExchangeToken, verifyExchangeToken } = require('../utils/oauthExchange');
 const generateToken = (id, role) => {
   return jwt.sign(
     { id, role },
@@ -10,29 +10,11 @@ const generateToken = (id, role) => {
   );
 };
 
-// In-memory storage for redirect tokens (development only)
-// Maps redirect_token -> { jwt, expiresAt }
-const googleOAuthTokens = new Map();
-
-const generateRedirectToken = (jwt, expiresInMs = 120000) => {
-  const token = crypto.randomBytes(32).toString('hex');
-  googleOAuthTokens.set(token, { jwt, expiresAt: Date.now() + expiresInMs });
-  // Set timeout to auto-cleanup expired token
-  setTimeout(() => googleOAuthTokens.delete(token), expiresInMs);
-  return token;
-};
-
-const exchangeRedirectToken = (token) => {
-  const entry = googleOAuthTokens.get(token);
-  if (!entry) return null;
-  if (Date.now() > entry.expiresAt) {
-    googleOAuthTokens.delete(token);
-    return null;
-  }
-  // Single-use: remove after exchange
-  googleOAuthTokens.delete(token);
-  return entry.jwt;
-};
+// Stateless OAuth exchange tokens ("rt") — see backend/utils/oauthExchange.js.
+// The former process-local Map is intentionally removed: callback and
+// exchange may run on different Render instances. Single-use is NOT
+// guaranteed statelessly (documented limitation); tokens are short-lived
+// (~2 minutes), audience-bound, and exchange mints a fresh access token.
 
 /**
  * Initiate Google OAuth redirect
@@ -171,12 +153,17 @@ const googleAuthCallback = async (req, res) => {
       });
     }
 
-    // Generate JWT — SAME format as normal login
-    const token = generateToken(user._id, user.role);
-
-    // Generate a secure redirect token and redirect to login
-    // The JWT will be transferred via the exchange endpoint, not in the URL
-    const redirectToken = generateRedirectToken(token);
+    // Generate a stateless, short-lived exchange token and redirect.
+    // The application JWT is minted at exchange time, never in the URL.
+    let redirectToken;
+    try {
+      redirectToken = signExchangeToken(user._id, user.role, process.env.JWT_SECRET);
+    } catch (_) {
+      return res.status(500).json({
+        success: false,
+        message: 'Server error during Google authentication. Please try again.'
+      });
+    }
 
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
     const redirectUrl = `${frontendUrl}/login?rt=${redirectToken}`;
@@ -206,29 +193,29 @@ const exchangeGoogleOAuthToken = async (req, res) => {
       });
     }
 
-    const jwtToken = exchangeRedirectToken(rt);
+    const exchangePayload = verifyExchangeToken(rt, process.env.JWT_SECRET);
 
-if (!jwtToken) {
+if (!exchangePayload) {
   return res.status(400).json({
     success: false,
     message: 'Invalid or expired redirect token'
   });
 }
 
-// Decode JWT payload to get user ID
-const payload = jwt.decode(jwtToken);
+    const exchangeUserId = exchangePayload.sub;
 
-    if (!payload || !payload.id) {
+    if (!exchangeUserId) {
       return res.status(400).json({
         success: false,
         message: 'Invalid token payload'
       });
     }
 
-    // Find the actual user in MongoDB by the ID stored in the JWT
-    // This ensures we return real user data (name, email, etc.) rather than
-    // undefined values from naive JWT decoding
-    const user = await User.findById(payload.id).select(
+    // Find the actual user in MongoDB by the ID in the exchange token.
+    // Role is always re-read from the database (never trusted from the
+    // token) and a FRESH application access token is minted here, so the
+    // short-lived exchange token is never usable as an access token.
+    const user = await User.findById(exchangeUserId).select(
       '-password -providerId'
     );
 
@@ -239,10 +226,12 @@ const payload = jwt.decode(jwtToken);
       });
     }
 
+    const token = generateToken(user._id, user.role);
+
     res.json({
       success: true,
       data: {
-        token: jwtToken,
+        token,
         user: {
           _id: user._id,
           name: user.name,
