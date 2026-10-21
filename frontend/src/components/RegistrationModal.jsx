@@ -84,7 +84,7 @@ const RegistrationModal = ({ isOpen, onClose, onSubmit, onPaymentRequired, event
         <div className="modal-header">
           <div>
             <h3 className="modal-title">Register for Event</h3>
-            <p className="modal-subtitle" style={{ fontSize: '0.82rem', color: '#64748b', marginTop: '4px' }}>{event?.title}</p>
+            <p className="modal-subtitle" style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '4px' }}>{event?.title}</p>
           </div>
           <button className="modal-close" onClick={onClose} disabled={loading} aria-label="Close">×</button>
         </div>
@@ -125,13 +125,13 @@ const RegistrationModal = ({ isOpen, onClose, onSubmit, onPaymentRequired, event
           </div>
 
           {isPaidEvent && (
-            <div style={{ background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '12px', padding: '14px', marginBottom: '16px', textAlign: 'center' }}>
-              <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#92400e', marginBottom: '4px' }}>Payment Required</div>
-              <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#92400e' }}>
+            <div style={{ background: 'var(--warning-subtle)', border: '1px solid var(--warning)', borderRadius: '12px', padding: '14px', marginBottom: '16px', textAlign: 'center' }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--warning)', marginBottom: '4px' }}>Payment Required</div>
+              <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--warning)' }}>
                 ₹{event.registrationFee * (Number(form.numberOfGuests) || 1)}
-                <span style={{ fontSize: '0.78rem', fontWeight: 500, color: '#64748b' }}> ({event.registrationFee} × {form.numberOfGuests} guests)</span>
+                <span style={{ fontSize: '0.78rem', fontWeight: 500, color: 'var(--text-muted)' }}> ({event.registrationFee} × {form.numberOfGuests} guests)</span>
               </div>
-              <div style={{ fontSize: '0.76rem', color: '#64748b', marginTop: '4px' }}>You will be redirected to Razorpay to complete payment after registration.</div>
+              <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '4px' }}>You will be redirected to Razorpay to complete payment after registration.</div>
             </div>
           )}
 

@@ -19,21 +19,21 @@ const formatTime = (d) => {
 
 const typeIcon = (type) => {
   const map = {
-    EVENT_APPROVED: { icon: '✅', color: '#15803d', bg: '#f0fdf4' },
-    EVENT_REJECTED: { icon: '❌', color: '#b91c1c', bg: '#fef2f2' },
-    REGISTRATION_SUCCESS: { icon: '📝', color: '#2563eb', bg: '#eff6ff' },
-    REGISTRATION_CONFIRMED: { icon: '✅', color: '#15803d', bg: '#f0fdf4' },
-    REGISTRATION_CANCELLED: { icon: '🗑', color: '#b91c1c', bg: '#fef2f2' },
-    REGISTRATION_REJECTED: { icon: '❌', color: '#b91c1c', bg: '#fef2f2' },
-    PAYMENT_SUCCESS: { icon: '💰', color: '#15803d', bg: '#f0fdf4' },
-    PAYMENT_FAILED: { icon: '⚠️', color: '#b91c1c', bg: '#fef2f2' },
-    TICKET_GENERATED: { icon: '🎟️', color: '#2563eb', bg: '#eff6ff' },
-    SCHEME_EXPIRED: { icon: '⏳', color: '#b91c1c', bg: '#fef2f2' },
-    EVENT_UPDATED: { icon: '📝', color: '#92400e', bg: '#fffbeb' },
-    EVENT_PENDING: { icon: '🕒', color: '#92400e', bg: '#fffbeb' },
-    CHECK_IN_SUCCESS: { icon: '📍', color: '#15803d', bg: '#f0fdf4' }
+    EVENT_APPROVED: { icon: '✅', color: 'var(--success)', bg: 'var(--success-subtle)' },
+    EVENT_REJECTED: { icon: '❌', color: 'var(--danger)', bg: 'var(--danger-subtle)' },
+    REGISTRATION_SUCCESS: { icon: '📝', color: 'var(--brand-primary)', bg: 'var(--brand-subtle)' },
+    REGISTRATION_CONFIRMED: { icon: '✅', color: 'var(--success)', bg: 'var(--success-subtle)' },
+    REGISTRATION_CANCELLED: { icon: '🗑', color: 'var(--danger)', bg: 'var(--danger-subtle)' },
+    REGISTRATION_REJECTED: { icon: '❌', color: 'var(--danger)', bg: 'var(--danger-subtle)' },
+    PAYMENT_SUCCESS: { icon: '💰', color: 'var(--success)', bg: 'var(--success-subtle)' },
+    PAYMENT_FAILED: { icon: '⚠️', color: 'var(--danger)', bg: 'var(--danger-subtle)' },
+    TICKET_GENERATED: { icon: '🎟️', color: 'var(--brand-primary)', bg: 'var(--brand-subtle)' },
+    SCHEME_EXPIRED: { icon: '⏳', color: 'var(--danger)', bg: 'var(--danger-subtle)' },
+    EVENT_UPDATED: { icon: '📝', color: 'var(--warning)', bg: 'var(--warning-subtle)' },
+    EVENT_PENDING: { icon: '🕒', color: 'var(--warning)', bg: 'var(--warning-subtle)' },
+    CHECK_IN_SUCCESS: { icon: '📍', color: 'var(--success)', bg: 'var(--success-subtle)' }
   };
-  return map[type] || { icon: '🔔', color: '#475569', bg: '#f8fafc' };
+  return map[type] || { icon: '🔔', color: 'var(--text-secondary)', bg: 'var(--surface-muted)' };
 };
 
 const Notifications = () => {
@@ -107,8 +107,8 @@ const Notifications = () => {
               const isUnread = !n.isRead;
               return (
                 <div key={n._id} style={{
-                  background: isUnread ? '#ffffff' : '#f8fafc',
-                  border: `1px solid ${isUnread ? '#e2e8f0' : '#f1f5f9'}`,
+                  background: isUnread ? 'var(--surface)' : 'var(--surface-muted)',
+                  border: `1px solid ${isUnread ? 'var(--border)' : 'var(--surface-muted)'}`,
                   borderRadius: '12px',
                   padding: '14px',
                   display: 'flex',
@@ -126,14 +126,14 @@ const Notifications = () => {
                     {meta.icon}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: '0.88rem', fontWeight: isUnread ? 700 : 500, color: isUnread ? '#0f172a' : '#475569' }}>{n.title}</div>
-                    <div style={{ fontSize: '0.82rem', color: '#64748b', marginTop: '2px', lineHeight: 1.45 }}>{n.message}</div>
-                    <div style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '4px' }}>{formatTime(n.createdAt)}</div>
+                    <div style={{ fontSize: '0.88rem', fontWeight: isUnread ? 700 : 500, color: isUnread ? 'var(--text-primary)' : 'var(--text-secondary)' }}>{n.title}</div>
+                    <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '2px', lineHeight: 1.45 }}>{n.message}</div>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '4px' }}>{formatTime(n.createdAt)}</div>
                     {n.relatedEvent && (
                       <Link
                         to={`/events/${n.relatedEvent}`}
                         onClick={(e) => e.stopPropagation()}
-                        style={{ display: 'inline-block', marginTop: '6px', fontSize: '0.78rem', fontWeight: 600, color: '#2563eb', textDecoration: 'none' }}
+                        style={{ display: 'inline-block', marginTop: '6px', fontSize: '0.78rem', fontWeight: 600, color: 'var(--brand-primary)', textDecoration: 'none' }}
                       >
                         Review Event →
                       </Link>
@@ -142,20 +142,20 @@ const Notifications = () => {
                       <Link
                         to={`/schemes/${n.relatedScheme}`}
                         onClick={(e) => e.stopPropagation()}
-                        style={{ display: 'inline-block', marginTop: '6px', fontSize: '0.78rem', fontWeight: 600, color: '#2563eb', textDecoration: 'none' }}
+                        style={{ display: 'inline-block', marginTop: '6px', fontSize: '0.78rem', fontWeight: 600, color: 'var(--brand-primary)', textDecoration: 'none' }}
                       >
                         View Scheme →
                       </Link>
                     )}
                   </div>
-                  {isUnread && <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#2563eb', flexShrink: 0, marginTop: '6px' }} />}
+                  {isUnread && <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--brand-primary)', flexShrink: 0, marginTop: '6px' }} />}
                 </div>
               );
             })}
             {pagination.pages > 1 && (
               <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', paddingTop: '10px' }}>
                 <button className="btn-secondary" onClick={() => setPage(p => p - 1)} disabled={page === 1} style={{ padding: '6px 12px', fontSize: '0.82rem' }}>← Prev</button>
-                <span style={{ alignSelf: 'center', fontSize: '0.82rem', color: '#64748b' }}>Page {page} of {pagination.pages}</span>
+                <span style={{ alignSelf: 'center', fontSize: '0.82rem', color: 'var(--text-muted)' }}>Page {page} of {pagination.pages}</span>
                 <button className="btn-secondary" onClick={() => setPage(p => p + 1)} disabled={page === pagination.pages} style={{ padding: '6px 12px', fontSize: '0.82rem' }}>Next →</button>
               </div>
             )}

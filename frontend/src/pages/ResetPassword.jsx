@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
 import { publicFetch } from '../services/api';
-const Government3DScene = lazy(() => import('../components/Government3DScene'));
 
 const ResetPassword = () => {
   const { token } = useParams();
@@ -47,17 +45,8 @@ const ResetPassword = () => {
 
   return (
     <div className="page-wrapper page-auth page-login">
-      <Suspense fallback={null}>
-        <Government3DScene variant="auth" />
-      </Suspense>
       <div className="auth-split-layout auth-split-layout-login">
         <div className="auth-visual-panel auth-visual-panel-login" aria-hidden="true">
-          <div className="auth-visual-overlay" aria-hidden="true"></div>
-          <div className="auth-visual-bg">
-            <div className="auth-glow auth-glow-1"></div>
-            <div className="auth-glow auth-glow-2"></div>
-            <div className="auth-glow auth-glow-3"></div>
-          </div>
           <div className="auth-visual-content">
             <h1 className="auth-visual-title" style={{ fontSize: '1.9rem', lineHeight: 1.15 }}>GovSchemes Portal</h1>
             <p style={{ fontSize: '1.05rem', fontWeight: 700, background: 'linear-gradient(135deg, #38bdf8, #22d3ee 50%, #a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', margin: '8px 0 12px', lineHeight: 1.3 }}>

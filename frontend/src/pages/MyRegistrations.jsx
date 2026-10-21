@@ -141,7 +141,7 @@ const MyRegistrations = () => {
           }
         },
         prefill: { name: reg.name, email: reg.email, contact: reg.phone },
-        theme: { color: '#2563eb' },
+        theme: { color: 'var(--brand-primary)' },
         modal: { ondismiss: () => { addToast('Payment cancelled. You can retry.', 'warning'); } }
       };
       new window.Razorpay(options).open();
@@ -177,7 +177,7 @@ const MyRegistrations = () => {
                 const canCancel = reg.status === 'Pending' || reg.status === 'Confirmed';
                 return (
                   <article key={reg._id} className="scheme-card" style={{ padding: 0, overflow: 'hidden' }}>
-                    <div style={{ height: '140px', overflow: 'hidden', background: '#f1f5f9', position: 'relative' }}>
+                    <div style={{ height: '140px', overflow: 'hidden', background: 'var(--surface-muted)', position: 'relative' }}>
                       <img src={ev.imageUrl || coverPlaceholder({ title: ev.title, category: ev.category, state: ev.state, sourceType: ev.sourceType, type: 'event' })} alt={ev.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
                       <span className={`pro-status pro-status--${statusTone(reg.status)}`} style={{ position: 'absolute', top: '10px', right: '10px' }}>
                         <span className="pro-status-icon" aria-hidden="true">{statusIcon(reg.status)}</span>
@@ -185,39 +185,39 @@ const MyRegistrations = () => {
                       </span>
                     </div>
                     <div style={{ padding: '14px', display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
-                      <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.3, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{ev.title || 'Event'}</h3>
-                      <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', fontSize: '0.76rem', color: '#475569' }}>
-                        <span style={{ background: '#f8fafc', border: '1px solid #f1f5f9', padding: '3px 7px', borderRadius: '999px' }}>📅 {formatDate(ev.eventDate)}</span>
-                        {ev.location && <span style={{ background: '#f8fafc', border: '1px solid #f1f5f9', padding: '3px 7px', borderRadius: '999px' }}>📍 {ev.location.length > 18 ? ev.location.slice(0, 18) + '...' : ev.location}</span>}
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.3, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{ev.title || 'Event'}</h3>
+                      <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', fontSize: '0.76rem', color: 'var(--text-secondary)' }}>
+                        <span style={{ background: 'var(--surface-muted)', border: '1px solid var(--surface-muted)', padding: '3px 7px', borderRadius: '999px' }}>📅 {formatDate(ev.eventDate)}</span>
+                        {ev.location && <span style={{ background: 'var(--surface-muted)', border: '1px solid var(--surface-muted)', padding: '3px 7px', borderRadius: '999px' }}>📍 {ev.location.length > 18 ? ev.location.slice(0, 18) + '...' : ev.location}</span>}
                       </div>
-                      <div style={{ fontSize: '0.82rem', color: '#475569', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                         <span><strong>Guests:</strong> {reg.numberOfGuests}</span>
                         <span>· {formatDate(reg.createdAt)}</span>
                       </div>
                       <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', alignItems: 'center' }}>
                         {ev.isPaidEvent && ev.registrationFee > 0 ? (
                           <>
-                            <span style={{ fontSize: '0.76rem', fontWeight: 700, color: '#92400e' }}>₹{ev.registrationFee}</span>
+                            <span style={{ fontSize: '0.76rem', fontWeight: 700, color: 'var(--warning)' }}>₹{ev.registrationFee}</span>
                             <span className={`status-badge ${reg.paymentStatus === 'Paid' ? 'status-active' : reg.paymentStatus === 'Pending' ? 'status-draft' : 'status-inactive'}`}>{reg.paymentStatus || 'Unpaid'}</span>
                           </>
                         ) : (
-                          <span style={{ fontSize: '0.74rem', color: '#15803d', background: '#f0fdf4', border: '1px solid #dcfce7', padding: '2px 7px', borderRadius: '999px' }}>FREE</span>
+                          <span style={{ fontSize: '0.74rem', color: 'var(--success)', background: 'var(--success-subtle)', border: '1px solid var(--success)', padding: '2px 7px', borderRadius: '999px' }}>FREE</span>
                         )}
                       </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '8px', padding: '10px 14px', borderTop: '1px solid #f1f5f9', flexWrap: 'wrap' }}>
-                      <Link to={`/events/${ev._id || ev}`} className="btn-card-secondary" style={{ flex: 1, textAlign: 'center', fontSize: '0.78rem', padding: '7px 10px', border: '1px solid #e2e8f0', borderRadius: '8px', background: '#ffffff', color: '#334155', textDecoration: 'none' }}>View Event</Link>
-                      <Link to={`/registrations/${reg._id}`} className="btn-card-secondary" style={{ flex: 1, textAlign: 'center', fontSize: '0.78rem', padding: '7px 10px', border: '1px solid #e2e8f0', borderRadius: '8px', background: '#ffffff', color: '#334155', textDecoration: 'none' }}>View Registration</Link>
+                    <div style={{ display: 'flex', gap: '8px', padding: '10px 14px', borderTop: '1px solid var(--surface-muted)', flexWrap: 'wrap' }}>
+                      <Link to={`/events/${ev._id || ev}`} className="btn-card-secondary" style={{ flex: 1, textAlign: 'center', fontSize: '0.78rem', padding: '7px 10px', border: '1px solid var(--border)', borderRadius: '8px', background: 'var(--surface)', color: 'var(--text-secondary)', textDecoration: 'none' }}>View Event</Link>
+                      <Link to={`/registrations/${reg._id}`} className="btn-card-secondary" style={{ flex: 1, textAlign: 'center', fontSize: '0.78rem', padding: '7px 10px', border: '1px solid var(--border)', borderRadius: '8px', background: 'var(--surface)', color: 'var(--text-secondary)', textDecoration: 'none' }}>View Registration</Link>
                       {reg.status === 'Confirmed' && (
                         <Link to={`/registrations/${reg._id}/ticket`} className="pro-ticket-cta" style={{ flex: 1, textAlign: 'center' }} aria-label={`View ticket for ${ev.title || 'event'}`}>
                           <span aria-hidden="true">🎟</span> View Ticket
                         </Link>
                       )}
                       {ev.isPaidEvent && ev.registrationFee > 0 && reg.paymentStatus !== 'Paid' && reg.status === 'Pending' && (
-                        <button type="button" onClick={() => handlePayNow(reg)} disabled={payingId === reg._id} className="btn-card-secondary" style={{ flex: 1, fontSize: '0.78rem', padding: '7px 10px', border: '1px solid #fde68a', color: '#92400e', background: '#fffbeb', borderRadius: '8px', cursor: 'pointer' }}>{payingId === reg._id ? 'Processing...' : 'Pay Now'}</button>
+                        <button type="button" onClick={() => handlePayNow(reg)} disabled={payingId === reg._id} className="btn-card-secondary" style={{ flex: 1, fontSize: '0.78rem', padding: '7px 10px', border: '1px solid var(--warning)', color: 'var(--warning)', background: 'var(--warning-subtle)', borderRadius: '8px', cursor: 'pointer' }}>{payingId === reg._id ? 'Processing...' : 'Pay Now'}</button>
                       )}
                       {canCancel && (
-                        <button type="button" onClick={() => handleCancelClick(reg)} className="btn-card-secondary" style={{ flex: 1, fontSize: '0.78rem', padding: '7px 10px', border: '1px solid #fecaca', color: '#b91c1c', background: '#ffffff', borderRadius: '8px', cursor: 'pointer' }}>Cancel</button>
+                        <button type="button" onClick={() => handleCancelClick(reg)} className="btn-card-secondary" style={{ flex: 1, fontSize: '0.78rem', padding: '7px 10px', border: '1px solid var(--danger)', color: 'var(--danger)', background: 'var(--surface)', borderRadius: '8px', cursor: 'pointer' }}>Cancel</button>
                       )}
                     </div>
                   </article>

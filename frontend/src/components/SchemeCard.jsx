@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { getSchemeImage } from '../utils/images';
+import { coverPlaceholder } from '../utils/placeholder';
 
 const truncate = (value, length) => (value?.length > length ? `${value.slice(0, length)}...` : value);
 
@@ -24,7 +25,9 @@ const getDeadlineState = (scheme) => {
 };
 
   const SchemeCard = ({ scheme, onEdit, onDelete, isAdmin, showBookmark = true }) => {
-    const [imgError, setImgError] = useState(false);
+    // Image fallback chain (monotonic, no loops): API imageUrl → local
+    // category image → local neutral SVG placeholder (always available).
+    const [imgStage, setImgStage] = useState(0);
     const { isAuthenticated, toggleBookmark, isBookmarked } = useAuth();
   const { addToast } = useToast();
   const navigate = useNavigate();
@@ -61,6 +64,12 @@ const getDeadlineState = (scheme) => {
   const isCentral = scheme.sourceType === 'CENTRAL' || scheme.sourceType === 'Central Govt';
   const isState = scheme.sourceType === 'STATE' || scheme.sourceType === 'State Govt';
   const cover = getSchemeImage(scheme);
+  const placeholder = coverPlaceholder({
+    title: scheme.title, category: scheme.category, state: scheme.state,
+    sourceType: scheme.sourceType, type: 'scheme',
+  });
+  const imgSrc = imgStage >= 2 ? placeholder : (imgStage === 1 || !scheme.imageUrl ? cover : scheme.imageUrl);
+  const handleImgError = () => setImgStage((s) => Math.min(s + 1, 2));
 
   const deadline = getDeadlineState(scheme);
 
@@ -70,9 +79,9 @@ const getDeadlineState = (scheme) => {
       aria-labelledby={`scheme-title-${scheme._id}`}
     >
       <Link to={`/schemes/${scheme._id}`} className="scheme-card-image-wrap" aria-label={`View ${scheme.title}`}>
-        <img src={(!imgError && scheme.imageUrl) ? scheme.imageUrl : cover} alt={`${scheme.title} — ${scheme.category} scheme`} className="scheme-card-image" loading="lazy" onError={() => setImgError(true)} />
+        <img src={imgSrc} alt={`${scheme.title} — ${scheme.category} scheme`} className="scheme-card-image" loading="lazy" onError={handleImgError} />
         <div className="scheme-card-image-overlay">
-          <span className="category-badge" style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(6px)', borderColor: 'rgba(255,255,255,0.9)', color: '#0f172a' }}>{scheme.category}</span>
+          <span className="category-badge" style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(6px)', borderColor: 'rgba(255,255,255,0.9)', color: 'var(--text-primary)' }}>{scheme.category}</span>
         </div>
         {showBookmark && (
           <button
@@ -133,7 +142,7 @@ const getDeadlineState = (scheme) => {
           <button type="button" className="btn-card-secondary" onClick={() => onEdit(scheme)} aria-label={`Edit ${scheme.title}`}>Edit</button>
         )}
         {isAdmin && onDelete && (
-          <button type="button" className="btn-card-secondary" onClick={() => onDelete(scheme)} aria-label={`Delete ${scheme.title}`} style={{ color: '#dc2626', borderColor: '#fecaca' }}>Delete</button>
+          <button type="button" className="btn-card-secondary" onClick={() => onDelete(scheme)} aria-label={`Delete ${scheme.title}`} style={{ color: 'var(--danger)', borderColor: 'var(--danger)' }}>Delete</button>
         )}
         {scheme.officialURL && !isAdmin && (
           <a href={scheme.officialURL} target="_blank" rel="noopener noreferrer" className="btn-card-secondary" onClick={(e) => e.stopPropagation()}>Official</a>

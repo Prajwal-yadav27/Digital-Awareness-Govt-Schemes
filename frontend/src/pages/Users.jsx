@@ -148,7 +148,7 @@ const Users = () => {
         </div>
 
         {/* --- Filters --- */}
-        <div style={{ padding: '14px 22px', borderBottom: '1px solid #f1f5f9', background: '#fbfdff' }}>
+        <div style={{ padding: '14px 22px', borderBottom: '1px solid var(--surface-muted)', background: 'var(--surface)' }}>
           <div className="admin-filter-row" style={{ margin: 0 }}>
             <input
               className="form-input"
@@ -190,8 +190,8 @@ const Users = () => {
             )}
           </div>
           {hasFilters && (
-            <div style={{ marginTop: '10px', fontSize: '0.78rem', color: '#64748b' }}>
-              Showing <strong style={{ color: '#0f172a' }}>{filteredUsers.length}</strong> of <strong style={{ color: '#0f172a' }}>{users.length}</strong> users
+            <div style={{ marginTop: '10px', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+              Showing <strong style={{ color: 'var(--text-primary)' }}>{filteredUsers.length}</strong> of <strong style={{ color: 'var(--text-primary)' }}>{users.length}</strong> users
               {(providerFilter || roleFilter) && (
                 <span>
                   {' '}· Provider: <strong>{providerFilter ? providerLabel(providerFilter) : 'All'}</strong> · Role: <strong>{roleFilter || 'All'}</strong>
@@ -263,7 +263,7 @@ const Users = () => {
                           <div className="admin-muted" style={{ fontSize: '0.74rem', fontFamily: 'ui-monospace, SFMono-Regular, monospace' }}>{String(u._id).slice(-8)}</div>
                         </div>
                       </div>
-                      <div className="admin-table-cell" style={{ wordBreak: 'break-all', fontSize: '0.86rem', color: '#334155' }}>{u.email}</div>
+                      <div className="admin-table-cell" style={{ wordBreak: 'break-all', fontSize: '0.86rem', color: 'var(--text-secondary)' }}>{u.email}</div>
                       <div className="admin-table-cell pro-phone-cell">
                         {maskPhone(u.phone)}
                         {u.phone ? (
@@ -278,7 +278,7 @@ const Users = () => {
                       <div className="admin-table-cell">
                         <span className={`role-badge-mini ${u.role === 'admin' ? 'role-admin' : 'role-user'}`}>{u.role}</span>
                       </div>
-                      <div className="admin-table-cell" style={{ fontSize: '0.84rem', whiteSpace: 'nowrap', color: '#475569' }}>{formatDate(u)}</div>
+                      <div className="admin-table-cell" style={{ fontSize: '0.84rem', whiteSpace: 'nowrap', color: 'var(--text-secondary)' }}>{formatDate(u)}</div>
                       <div className="admin-table-cell admin-table-actions">
                         <button
                           className="btn-icon btn-edit"
@@ -295,8 +295,8 @@ const Users = () => {
                             title={u.role === 'organizer' ? `Remove organizer access from ${u.name}` : `Make ${u.name} an organizer`}
                             aria-label={u.role === 'organizer' ? `Remove organizer access from ${u.name}` : `Make ${u.name} an organizer`}
                             style={u.role === 'organizer'
-                              ? { color: '#92400e', borderColor: '#fde68a', background: '#fffbeb' }
-                              : { color: '#1d4ed8', borderColor: '#bfdbfe', background: '#eff6ff' }}
+                              ? { color: 'var(--warning)', borderColor: 'var(--warning)', background: 'var(--warning-subtle)' }
+                              : { color: 'var(--brand-hover)', borderColor: 'var(--border-strong)', background: 'var(--brand-subtle)' }}
                           >
                             {u.role === 'organizer' ? '⬇' : '⬆'}
                           </button>
@@ -316,7 +316,7 @@ const Users = () => {
                             disabled
                             title={isSelf ? 'Cannot delete your own account' : 'Admin accounts are protected'}
                             aria-label={isSelf ? 'Delete disabled for your own account' : 'Delete disabled for admin accounts'}
-                            style={{ opacity: 0.42, cursor: 'not-allowed', background: '#f8fafc' }}
+                            style={{ opacity: 0.42, cursor: 'not-allowed', background: 'var(--surface-muted)' }}
                           >
                             🗑
                           </button>
@@ -345,7 +345,7 @@ const Users = () => {
                 </div>
                 <div>
                   <h3 className="modal-title">{viewingUser.name}</h3>
-                  <p className="modal-subtitle" style={{ fontSize: '0.82rem', color: '#64748b', marginTop: '2px' }}>{viewingUser.email}</p>
+                  <p className="modal-subtitle" style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '2px' }}>{viewingUser.email}</p>
                 </div>
               </div>
               <button className="modal-close" onClick={() => { setIsViewOpen(false); setViewingUser(null); }} aria-label="Close">×</button>
@@ -357,21 +357,21 @@ const Users = () => {
                 {viewingUser.isOrganizerVerified && <span className="role-badge-mini role-user">✓ Verified Organizer</span>}
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', fontSize: '0.88rem' }}>
-                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</div><div style={{ color: '#0f172a', wordBreak: 'break-all' }}>{viewingUser.email}</div></div>
-                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone</div><div style={{ color: '#0f172a' }}>{maskPhone(viewingUser.phone)}</div></div>
-                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Department</div><div style={{ color: '#0f172a' }}>{viewingUser.department || '—'}</div></div>
-                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Organization</div><div style={{ color: '#0f172a' }}>{viewingUser.organizationName || '—'}{viewingUser.organizationType ? ` (${viewingUser.organizationType})` : ''}</div></div>
-                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Bookmarks</div><div style={{ color: '#0f172a' }}>{Array.isArray(viewingUser.bookmarks) ? viewingUser.bookmarks.length : 0} saved</div></div>
-                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Registered</div><div style={{ color: '#0f172a' }}>{formatDate(viewingUser)}</div></div>
-                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Last updated</div><div style={{ color: '#0f172a' }}>{viewingUser.updatedAt ? new Date(viewingUser.updatedAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}</div></div>
-                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>User ID</div><div style={{ color: '#475569', fontFamily: 'ui-monospace, monospace', fontSize: '0.78rem', wordBreak: 'break-all' }}>{viewingUser._id}</div></div>
+                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</div><div style={{ color: 'var(--text-primary)', wordBreak: 'break-all' }}>{viewingUser.email}</div></div>
+                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone</div><div style={{ color: 'var(--text-primary)' }}>{maskPhone(viewingUser.phone)}</div></div>
+                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Department</div><div style={{ color: 'var(--text-primary)' }}>{viewingUser.department || '—'}</div></div>
+                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Organization</div><div style={{ color: 'var(--text-primary)' }}>{viewingUser.organizationName || '—'}{viewingUser.organizationType ? ` (${viewingUser.organizationType})` : ''}</div></div>
+                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Bookmarks</div><div style={{ color: 'var(--text-primary)' }}>{Array.isArray(viewingUser.bookmarks) ? viewingUser.bookmarks.length : 0} saved</div></div>
+                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Registered</div><div style={{ color: 'var(--text-primary)' }}>{formatDate(viewingUser)}</div></div>
+                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Last updated</div><div style={{ color: 'var(--text-primary)' }}>{viewingUser.updatedAt ? new Date(viewingUser.updatedAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}</div></div>
+                <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>User ID</div><div style={{ color: 'var(--text-secondary)', fontFamily: 'ui-monospace, monospace', fontSize: '0.78rem', wordBreak: 'break-all' }}>{viewingUser._id}</div></div>
               </div>
               <div>
                 <div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px' }}>Bio</div>
-                <div style={{ color: '#334155', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '10px 12px', fontSize: '0.88rem', whiteSpace: 'pre-wrap' }}>{viewingUser.bio || '—'}</div>
+                <div style={{ color: 'var(--text-secondary)', background: 'var(--surface-muted)', border: '1px solid var(--border)', borderRadius: '10px', padding: '10px 12px', fontSize: '0.88rem', whiteSpace: 'pre-wrap' }}>{viewingUser.bio || '—'}</div>
               </div>
             </div>
-            <div className="modal-footer" style={{ justifyContent: 'flex-end', background: '#f8fafc', borderTop: '1px solid #e2e8f0' }}>
+            <div className="modal-footer" style={{ justifyContent: 'flex-end', background: 'var(--surface-muted)', borderTop: '1px solid var(--border)' }}>
               <button type="button" className="btn-primary" onClick={() => { setIsViewOpen(false); setViewingUser(null); }}>Done</button>
             </div>
           </div>

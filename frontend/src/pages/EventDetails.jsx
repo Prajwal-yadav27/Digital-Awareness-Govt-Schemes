@@ -155,7 +155,7 @@ const EventDetails = () => {
                 fetchEvent();
               },
               prefill: { name: formData.name, email: formData.email, contact: formData.phone },
-              theme: { color: '#2563eb' },
+              theme: { color: 'var(--brand-primary)' },
               modal: { ondismiss: () => { addToast('Payment cancelled. You can retry from My Registrations.', 'warning'); fetchEvent(); } }
             };
             new window.Razorpay(options).open();
@@ -298,7 +298,7 @@ const EventDetails = () => {
                 <button className="btn-primary" onClick={registerState.action} disabled={registerState.disabled}>{registerState.label}</button>
               )}
               {isAuthenticated() && user?.role === 'user' && registerState.disabled && registerState.reason && (
-                <span style={{ fontSize: '0.82rem', color: '#b91c1c', background: '#fef2f2', border: '1px solid #fecaca', padding: '8px 12px', borderRadius: '10px', fontWeight: 600 }}>{registerState.reason}</span>
+                <span style={{ fontSize: '0.82rem', color: 'var(--danger)', background: 'var(--danger-subtle)', border: '1px solid var(--danger)', padding: '8px 12px', borderRadius: '10px', fontWeight: 600 }}>{registerState.reason}</span>
               )}
               {!isAuthenticated() && (
                 <button className="btn-primary" onClick={() => navigate('/login')}>Login to Register</button>
@@ -309,9 +309,9 @@ const EventDetails = () => {
                     <button className="btn-primary" onClick={() => handleAdminStatusChange('Approved')} disabled={adminActionLoading}>Approve</button>
                   )}
                   {event.status === 'Pending' && (
-                    <button className="btn-secondary" onClick={() => handleAdminStatusChange('Rejected')} disabled={adminActionLoading} style={{ borderColor: '#fecaca', color: '#b91c1c' }}>Reject</button>
+                    <button className="btn-secondary" onClick={() => handleAdminStatusChange('Rejected')} disabled={adminActionLoading} style={{ borderColor: 'var(--danger)', color: 'var(--danger)' }}>Reject</button>
                   )}
-                  <button className="btn-secondary" onClick={() => setIsAdminDeleteOpen(true)} disabled={adminActionLoading} style={{ borderColor: '#fecaca', color: '#b91c1c' }}>Delete</button>
+                  <button className="btn-secondary" onClick={() => setIsAdminDeleteOpen(true)} disabled={adminActionLoading} style={{ borderColor: 'var(--danger)', color: 'var(--danger)' }}>Delete</button>
                 </div>
               )}
             </div>
@@ -432,7 +432,7 @@ const EventDetails = () => {
                       <strong>Target Audience:</strong>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '6px' }}>
                         {event.targetAudience.map((a, i) => (
-                          <span key={i} style={{ fontSize: '0.78rem', color: '#1e40af', background: '#eff6ff', border: '1px solid #dbeafe', padding: '3px 10px', borderRadius: '16px' }}>{a}</span>
+                          <span key={i} style={{ fontSize: '0.78rem', color: 'var(--brand-hover)', background: 'var(--brand-subtle)', border: '1px solid var(--brand-subtle)', padding: '3px 10px', borderRadius: '16px' }}>{a}</span>
                         ))}
                       </div>
                     </div>
@@ -440,7 +440,7 @@ const EventDetails = () => {
                   {(event.ward || event.district || event.state) && (
                     <div>
                       <strong>Location Details:</strong>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '4px', color: '#475569' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '4px', color: 'var(--text-secondary)' }}>
                         {event.ward && <div>Ward: {event.ward}</div>}
                         {event.district && <div>District: {event.district}</div>}
                         {event.state && <div>State: {event.state}</div>}
@@ -460,7 +460,7 @@ const EventDetails = () => {
               <div className="scheme-section-body">
                 {event.location ? (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    <div style={{ fontSize: '0.95rem', fontWeight: 600, color: '#0f172a' }}>{event.location}</div>
+                    <div style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)' }}>{event.location}</div>
                     <a
                       href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`}
                       target="_blank"
@@ -471,7 +471,7 @@ const EventDetails = () => {
                     </a>
                   </div>
                 ) : (
-                  <p style={{ fontSize: '0.88rem', color: '#94a3b8', fontStyle: 'italic' }}>Location not specified</p>
+                  <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>Location not specified</p>
                 )}
               </div>
             </section>
@@ -494,9 +494,9 @@ const EventDetails = () => {
                 <h2 className="scheme-section-title">Organizer</h2>
               </div>
               <div className="scheme-section-body">
-                <div style={{ fontWeight: 600, color: '#0f172a' }}>{event.organizer?.name || event.organizer?.organizationName || 'Organizer'}</div>
-                {event.organizer?.email && <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{event.organizer.email}</div>}
-                {event.organizer?.organizationName && <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{event.organizer.organizationName}</div>}
+                <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{event.organizer?.name || event.organizer?.organizationName || 'Organizer'}</div>
+                {event.organizer?.email && <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{event.organizer.email}</div>}
+                {event.organizer?.organizationName && <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{event.organizer.organizationName}</div>}
               </div>
             </section>
           </div>
@@ -541,7 +541,7 @@ const EventDetails = () => {
 
         {/* Reviews Section */}
         <div className="pro-review-card" style={{ marginTop: '20px', padding: '24px' }}>
-          <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span aria-hidden="true">⭐</span> Reviews & Ratings
           </h2>
           <EventReviews eventId={event._id} isAuthenticated={isAuthenticated()} user={user} userRole={user?.role} />
@@ -567,12 +567,12 @@ const EventDetails = () => {
         />
 
         {registerSuccess && (
-          <div style={{ marginTop: '16px', background: '#f0fdf4', border: '1px solid #dcfce7', borderRadius: '16px', padding: '20px', textAlign: 'center' }}>
-            <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#15803d', marginBottom: '8px' }}>Registration Submitted Successfully</div>
-            <div style={{ fontSize: '0.9rem', color: '#334155', marginBottom: '6px' }}>
+          <div style={{ marginTop: '16px', background: 'var(--success-subtle)', border: '1px solid var(--success)', borderRadius: '16px', padding: '20px', textAlign: 'center' }}>
+            <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--success)', marginBottom: '8px' }}>Registration Submitted Successfully</div>
+            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '6px' }}>
               <strong>{event.title}</strong> — <span className="status-badge status-active" style={{ fontSize: '0.7rem' }}>Pending</span>
             </div>
-            <div style={{ fontSize: '0.85rem', color: '#475569' }}>
+            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
               Guests: <strong>{registerSuccess.numberOfGuests}</strong> · Date: {new Date(registerSuccess.createdAt || Date.now()).toLocaleDateString('en-IN')}
             </div>
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '14px', flexWrap: 'wrap' }}>

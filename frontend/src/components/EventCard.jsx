@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getEventImage } from '../utils/images';
+import { coverPlaceholder } from '../utils/placeholder';
 
 const formatShortDate = (dateStr) => {
   if (!dateStr) return null;
@@ -27,11 +28,19 @@ const capitalize = (value) => {
 };
 
 const EventCard = ({ event }) => {
-  const [imgError, setImgError] = useState(false);
+  // Image fallback chain (monotonic, no loops): API imageUrl → local
+  // category image → local neutral SVG placeholder (always available).
+  const [imgStage, setImgStage] = useState(0);
   const availableSeats = event.capacity ? Math.max(0, event.capacity - (event.registrationCount || 0)) : null;
   const isFull = event.capacity && availableSeats === 0;
   const organizerName = event.organizer?.name || event.organizer?.organizationName || 'Organizer';
   const cover = getEventImage(event);
+  const placeholder = coverPlaceholder({
+    title: event.title, category: event.category, state: event.state,
+    sourceType: event.sourceType, type: 'event',
+  });
+  const imgSrc = imgStage >= 2 ? placeholder : (imgStage === 1 || !event.imageUrl ? cover : event.imageUrl);
+  const handleImgError = () => setImgStage((s) => Math.min(s + 1, 2));
   const date = formatShortDate(event.eventDate);
   const time = formatTime(event.eventDate);
   const isPaid = event.isPaidEvent && event.registrationFee > 0;
@@ -47,9 +56,9 @@ const EventCard = ({ event }) => {
       aria-labelledby={`event-title-${event._id}`}
     >
       <Link to={`/events/${event._id}`} className="scheme-card-image-wrap event-card-image-wrap" aria-label={`View ${event.title}`}>
-        <img src={(!imgError && event.imageUrl) ? event.imageUrl : cover} alt={`${event.title} — ${event.department || event.category} government event`} className="scheme-card-image" loading="lazy" onError={() => setImgError(true)} />
+        <img src={imgSrc} alt={`${event.title} — ${event.department || event.category} government event`} className="scheme-card-image" loading="lazy" onError={handleImgError} />
         <div className="scheme-card-image-overlay">
-          <span className="category-badge" style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(6px)', borderColor: 'rgba(255,255,255,0.9)', color: '#0f172a' }}>{event.category}</span>
+          <span className="category-badge" style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(6px)', borderColor: 'rgba(255,255,255,0.9)', color: 'var(--text-primary)' }}>{event.category}</span>
         </div>
       </Link>
 
@@ -133,7 +142,7 @@ const EventCard = ({ event }) => {
           )}
         </div>
 
-        <div style={{ fontSize: '0.78rem', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           by {organizerName}
         </div>
       </div>

@@ -194,35 +194,35 @@ const OrganizerDashboard = () => {
           <>
             <div className="admin-overview-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', marginBottom: '20px' }}>
               <div className="admin-stat-card">
-                <div className="admin-stat-icon" style={{ background: '#eff6ff', color: '#2563eb' }}>📋</div>
+                <div className="admin-stat-icon" style={{ background: 'var(--brand-subtle)', color: 'var(--brand-primary)' }}>📋</div>
                 <div>
                   <div className="admin-stat-value">{stats.total}</div>
                   <div className="admin-stat-label">Total Events</div>
                 </div>
               </div>
               <div className="admin-stat-card">
-                <div className="admin-stat-icon" style={{ background: '#fefce8', color: '#a16207' }}>⏳</div>
+                <div className="admin-stat-icon" style={{ background: 'var(--warning-subtle)', color: 'var(--warning)' }}>⏳</div>
                 <div>
                   <div className="admin-stat-value">{stats.pending}</div>
                   <div className="admin-stat-label">Pending</div>
                 </div>
               </div>
               <div className="admin-stat-card">
-                <div className="admin-stat-icon" style={{ background: '#f0fdf4', color: '#15803d' }}>✓</div>
+                <div className="admin-stat-icon" style={{ background: 'var(--success-subtle)', color: 'var(--success)' }}>✓</div>
                 <div>
                   <div className="admin-stat-value">{stats.approved}</div>
                   <div className="admin-stat-label">Approved</div>
                 </div>
               </div>
               <div className="admin-stat-card">
-                <div className="admin-stat-icon" style={{ background: '#fef2f2', color: '#b91c1c' }}>✕</div>
+                <div className="admin-stat-icon" style={{ background: 'var(--danger-subtle)', color: 'var(--danger)' }}>✕</div>
                 <div>
                   <div className="admin-stat-value">{stats.rejected}</div>
                   <div className="admin-stat-label">Rejected</div>
                 </div>
               </div>
               <div className="admin-stat-card" onClick={() => setActive('events')} style={{ cursor: 'pointer' }}>
-                <div className="admin-stat-icon" style={{ background: '#eff6ff', color: '#2563eb' }}>📨</div>
+                <div className="admin-stat-icon" style={{ background: 'var(--brand-subtle)', color: 'var(--brand-primary)' }}>📨</div>
                 <div>
                   <div className="admin-stat-value">{stats.totalRegistrations}</div>
                   <div className="admin-stat-label">Total Registrations</div>
@@ -230,7 +230,7 @@ const OrganizerDashboard = () => {
                 </div>
               </div>
               <div className="admin-stat-card" onClick={() => setActive('events')} style={{ cursor: 'pointer' }}>
-                <div className="admin-stat-icon" style={{ background: '#fdf4ff', color: '#a21caf' }}>👥</div>
+                <div className="admin-stat-icon" style={{ background: 'var(--accent-subtle)', color: 'var(--accent-text)' }}>👥</div>
                 <div>
                   <div className="admin-stat-value">{stats.totalGuests}</div>
                   <div className="admin-stat-label">Total Guests</div>
@@ -246,10 +246,10 @@ const OrganizerDashboard = () => {
                   <p className="analytics-card-subtitle">From verified paid registrations only (Payment.status = Paid)</p>
                 </div>
                 <div style={{ textAlign: 'center', padding: '16px 0' }}>
-                  <div style={{ fontSize: '2rem', fontWeight: 800, color: stats.totalRevenue > 0 ? '#15803d' : '#0f172a' }}>
+                  <div style={{ fontSize: '2rem', fontWeight: 800, color: stats.totalRevenue > 0 ? 'var(--success)' : 'var(--text-primary)' }}>
                     ₹{stats.totalRevenue.toLocaleString('en-IN')}
                   </div>
-                  <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '4px' }}>{stats.paidEvents} paid event{stats.paidEvents !== 1 ? 's' : ''} · {stats.freeEvents} free event{stats.freeEvents !== 1 ? 's' : ''}</div>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '4px' }}>{stats.paidEvents} paid event{stats.paidEvents !== 1 ? 's' : ''} · {stats.freeEvents} free event{stats.freeEvents !== 1 ? 's' : ''}</div>
                 </div>
               </section>
 
@@ -260,12 +260,12 @@ const OrganizerDashboard = () => {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {[
-                    { label: 'Confirmed', value: stats.confirmedRegistrations, color: '#15803d' },
-                    { label: 'Pending', value: stats.pendingRegistrations, color: '#92400e' },
-                    { label: 'Cancelled', value: stats.cancelledRegistrations, color: '#b91c1c' }
+                    { label: 'Confirmed', value: stats.confirmedRegistrations, color: 'var(--success)' },
+                    { label: 'Pending', value: stats.pendingRegistrations, color: 'var(--warning)' },
+                    { label: 'Cancelled', value: stats.cancelledRegistrations, color: 'var(--danger)' }
                   ].map(s => (
                     <div key={s.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '0.85rem', fontWeight: 500, color: '#334155' }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-secondary)' }}>
                         <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: s.color, display: 'inline-block', marginRight: '8px', flexShrink: 0 }} aria-hidden="true"></span> {s.label}
                       </span>
                       <span style={{ fontWeight: 700, color: s.color, fontSize: '0.88rem' }}>{s.value}</span>

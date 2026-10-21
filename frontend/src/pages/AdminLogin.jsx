@@ -3,13 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { API_BASE_URL } from '../services/api';
-import { lazy, Suspense } from 'react';
-const Government3DScene = lazy(() => import('../components/Government3DScene'));
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -42,20 +41,8 @@ const AdminLogin = () => {
 
   return (
     <div className="page-wrapper page-auth page-login">
-      <Suspense fallback={null}>
-        <Government3DScene variant="auth" />
-      </Suspense>
       <div className="auth-split-layout auth-split-layout-login">
         <div className="auth-visual-panel auth-visual-panel-login" aria-hidden="true">
-          <div className="auth-visual-overlay" aria-hidden="true"></div>
-          <div className="auth-visual-bg">
-            <div className="auth-glow auth-glow-1"></div>
-            <div className="auth-glow auth-glow-2"></div>
-            <div className="auth-glow auth-glow-3"></div>
-            <div className="auth-shape auth-shape-1"></div>
-            <div className="auth-shape auth-shape-2"></div>
-            <div className="auth-shape auth-shape-3"></div>
-          </div>
           <div className="auth-visual-content">
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '999px', background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.22)', color: '#fca5a5', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '16px' }}>
               <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#ef4444', boxShadow: '0 0 8px rgba(239,68,68,0.5)' }}></span>
@@ -66,18 +53,18 @@ const AdminLogin = () => {
               Government Schemes<br/>Administration
             </p>
             <p className="auth-visual-subtitle">Secure access for verified administrators to manage schemes, events, and citizen services.</p>
-            <div className="login-3d-scene" aria-hidden="true">
-              <div className="login-float-card">
-                <span className="login-float-icon" style={{ background: 'rgba(239,68,68,0.14)', borderColor: 'rgba(239,68,68,0.22)', color: '#f87171' }}>🛡️</span>
-                <span><strong style={{ color: '#fff', fontSize: '0.82rem' }}>Secure Access</strong><br/><span style={{ color: 'rgba(255,255,255,0.68)', fontSize: '0.70rem' }}>Role Verified</span></span>
+            <div className="auth-highlights" aria-hidden="true">
+              <div className="auth-highlight-card">
+                <span className="auth-highlight-icon">🛡️</span>
+                <span><strong>Secure Access</strong><br /><span>Role Verified</span></span>
               </div>
-              <div className="login-float-card">
-                <span className="login-float-icon" style={{ background: 'rgba(59,130,246,0.14)', borderColor: 'rgba(59,130,246,0.22)', color: '#60a5fa' }}>📊</span>
-                <span><strong style={{ color: '#fff', fontSize: '0.82rem' }}>Dashboard</strong><br/><span style={{ color: 'rgba(255,255,255,0.68)', fontSize: '0.70rem' }}>Analytics & Control</span></span>
+              <div className="auth-highlight-card">
+                <span className="auth-highlight-icon">📊</span>
+                <span><strong>Dashboard</strong><br /><span>Analytics &amp; Control</span></span>
               </div>
-              <div className="login-float-card">
-                <span className="login-float-icon" style={{ background: 'rgba(139,92,246,0.14)', borderColor: 'rgba(139,92,246,0.22)', color: '#a78bfa' }}>🏛️</span>
-                <span><strong style={{ color: '#fff', fontSize: '0.82rem' }}>Government Services</strong><br/><span style={{ color: 'rgba(255,255,255,0.68)', fontSize: '0.70rem' }}>Secure Management</span></span>
+              <div className="auth-highlight-card">
+                <span className="auth-highlight-icon">🏛️</span>
+                <span><strong>Public Services</strong><br /><span>Secure Management</span></span>
               </div>
             </div>
           </div>
@@ -101,7 +88,14 @@ const AdminLogin = () => {
 
               <div className="form-group">
                 <label className="form-label" htmlFor="admin-password">Password</label>
-                <input id="admin-password" type="password" name="password" value={formData.password} onChange={handleChange} required className="form-input" placeholder="Your password" disabled={loading} autoComplete="current-password" />
+                <input id="admin-password" type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} required className="form-input" placeholder="Your password" disabled={loading} autoComplete="current-password" />
+              </div>
+
+              <div className="form-group" style={{ marginTop: '-4px' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                  <input type="checkbox" checked={showPassword} onChange={(e) => setShowPassword(e.target.checked)} disabled={loading} />
+                  Show password
+                </label>
               </div>
 
               <button type="submit" className="btn-primary btn-full" disabled={loading}>

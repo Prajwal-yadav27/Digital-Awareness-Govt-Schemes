@@ -77,7 +77,7 @@ const OrganizerLayout = ({
           </nav>
 
           <div className="org-sidebar-footer">
-            <button type="button" className="org-nav-item" onClick={handleLogout} style={{ color: '#b91c1c' }}>
+            <button type="button" className="org-nav-item" onClick={handleLogout} style={{ color: 'var(--danger)' }}>
               <span className="org-nav-icon" aria-hidden="true">↩</span>
               <span className="org-nav-text">Logout</span>
             </button>

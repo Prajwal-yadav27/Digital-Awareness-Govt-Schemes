@@ -230,7 +230,7 @@ const SchemeDetails = () => {
               <h1 className="scheme-detail-title">{title}</h1>
 
               <div className="scheme-detail-meta">
-                <span className="category-badge" style={{ background: '#f1f5f9', color: '#475569', borderColor: '#e2e8f0' }}>{category}</span>
+                <span className="category-badge" style={{ background: 'var(--surface-muted)', color: 'var(--text-secondary)', borderColor: 'var(--border)' }}>{category}</span>
 
                 {isCentral && (
                   <span className="source-badge source-central">
@@ -257,7 +257,7 @@ const SchemeDetails = () => {
                 )}
 
                 {scheme.applyCount != null && scheme.applyCount > 0 && (
-                  <span className="apply-count-badge" style={{ background: '#f0fdf4', color: '#15803d', borderColor: '#dcfce7' }}>
+                  <span className="apply-count-badge" style={{ background: 'var(--success-subtle)', color: 'var(--success)', borderColor: 'var(--success)' }}>
                     {scheme.applyCount} applied
                   </span>
                 )}
@@ -265,12 +265,12 @@ const SchemeDetails = () => {
                   <span className="status-badge status-inactive">Expired — Applications closed</span>
                 )}
                 {isExpiringSoon && (
-                  <span className="status-badge status-draft" style={{ background: '#fffbeb', color: '#92400e', borderColor: '#fde68a' }}>
+                  <span className="status-badge status-draft" style={{ background: 'var(--warning-subtle)', color: 'var(--warning)', borderColor: 'var(--warning)' }}>
                     Closing soon — Ends {endDateLabel}
                   </span>
                 )}
                 {!isExpired && !isExpiringSoon && hasEndDate && (
-                  <span className="status-badge status-draft" style={{ background: '#eff6ff', color: '#1d4ed8', borderColor: '#bfdbfe' }}>
+                  <span className="status-badge status-draft" style={{ background: 'var(--brand-subtle)', color: 'var(--brand-hover)', borderColor: 'var(--border-strong)' }}>
                     Ends: {endDateLabel}
                   </span>
                 )}
@@ -279,7 +279,7 @@ const SchemeDetails = () => {
               {hasTags && (
                 <div className="detail-eligibility-tags" style={{ marginTop: '12px', display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                   {scheme.eligibilityTags.slice(0, 8).map((tag, i) => (
-                    <span key={`${tag}-${i}`} className="eligibility-tag eligibility-tag-lg" style={{ background: '#f0fdf4', color: '#15803d', borderColor: '#dcfce7' }}>
+                    <span key={`${tag}-${i}`} className="eligibility-tag eligibility-tag-lg" style={{ background: 'var(--success-subtle)', color: 'var(--success)', borderColor: 'var(--success)' }}>
                       {tag}
                     </span>
                   ))}
@@ -301,7 +301,7 @@ const SchemeDetails = () => {
                 aria-pressed={bookmarked}
                 aria-label={bookmarked ? `Remove ${title} from bookmarks` : `Save ${title} to bookmarks`}
                 title={bookmarked ? 'Remove from bookmarks' : 'Save to bookmarks'}
-                style={{ background: bookmarked ? '#fef3c7' : '#ffffff', borderColor: bookmarked ? '#fcd34d' : '#e2e8f0', color: bookmarked ? '#92400e' : '#475569' }}
+                style={{ background: bookmarked ? 'var(--warning-subtle)' : 'var(--surface)', borderColor: bookmarked ? 'var(--warning)' : 'var(--border)', color: bookmarked ? 'var(--warning)' : 'var(--text-secondary)' }}
               >
                 {bookmarkLoading
                   ? 'Updating...'
@@ -348,7 +348,7 @@ const SchemeDetails = () => {
             <section className="scheme-section-card">
               <div className="scheme-section-head">
                 <div className="scheme-section-icon" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brand-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                     <polyline points="14 2 14 8 20 8"/>
                     <line x1="16" y1="13" x2="8" y2="13"/>
@@ -365,7 +365,7 @@ const SchemeDetails = () => {
             <section className="scheme-section-card">
               <div className="scheme-section-head">
                 <div className="scheme-section-icon" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--success)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                     <polyline points="22 4 12 14.01 9 11.01"/>
                   </svg>
@@ -388,7 +388,7 @@ const SchemeDetails = () => {
             <section className="scheme-section-card">
               <div className="scheme-section-head">
                 <div className="scheme-section-icon" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="10"/>
                     <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
                     <line x1="9" y1="9" x2="9.01" y2="9"/>
@@ -413,7 +413,7 @@ const SchemeDetails = () => {
             <section className="scheme-section-card">
               <div className="scheme-section-head">
                 <div className="scheme-section-icon" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9333ea" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-text)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
                   </svg>
                 </div>
@@ -423,7 +423,7 @@ const SchemeDetails = () => {
                 {hasDocs ? (
                   <div className="docs-preview-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                     {scheme.documentsRequired.map((doc, i) => (
-                      <span key={`doc-${i}`} className="doc-chip" style={{ background: '#f8fafc', color: '#334155', borderColor: '#e2e8f0' }}>
+                      <span key={`doc-${i}`} className="doc-chip" style={{ background: 'var(--surface-muted)', color: 'var(--text-secondary)', borderColor: 'var(--border)' }}>
                         {doc}
                       </span>
                     ))}
@@ -438,7 +438,7 @@ const SchemeDetails = () => {
               <section className="scheme-section-card" style={{ gridColumn: '1 / -1' }}>
                 <div className="scheme-section-head">
                   <div className="scheme-section-icon" aria-hidden="true">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brand-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                       <polyline points="15 3 21 3 21 9"/>
                       <line x1="10" y1="14" x2="21" y2="3"/>
@@ -449,12 +449,12 @@ const SchemeDetails = () => {
                 <div className="scheme-section-body">
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {officialURL && (
-                      <a href={officialURL} target="_blank" rel="noreferrer" style={{ color: '#2563eb', fontWeight: 600, wordBreak: 'break-all', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                      <a href={officialURL} target="_blank" rel="noreferrer" style={{ color: 'var(--brand-primary)', fontWeight: 600, wordBreak: 'break-all', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                         🔗 Official Website — {officialURL}
                       </a>
                     )}
                     {scheme.imageUrl && (
-                      <span style={{ fontSize: '0.85rem', color: '#64748b', wordBreak: 'break-all' }}>🖼️ Image: {scheme.imageUrl}</span>
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', wordBreak: 'break-all' }}>🖼️ Image: {scheme.imageUrl}</span>
                     )}
                     {!officialURL && !scheme.imageUrl && <span className="scheme-muted">No links available</span>}
                   </div>
@@ -497,18 +497,18 @@ const SchemeDetails = () => {
                 href={officialURL}
                 target="_blank"
                 rel="noreferrer"
-                style={{ padding: '12px 24px', background: '#ffffff', borderColor: '#e2e8f0', color: '#334155' }}
+                style={{ padding: '12px 24px', background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
               >
                 Official Website
               </a>
             ) : (
-              <span className="cta-note" style={{ fontSize: '0.85rem', color: '#64748b' }}>Official website link not available for this scheme yet.</span>
+              <span className="cta-note" style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Official website link not available for this scheme yet.</span>
             )}
           </div>
 
           {isAdmin() && (
             <div className="scheme-admin-shortcut" style={{ marginTop: '16px', textAlign: 'right' }}>
-              <Link to="/admin" className="link-inline" style={{ color: '#2563eb', fontWeight: 600 }}>Go to Admin Dashboard</Link>
+              <Link to="/admin" className="link-inline" style={{ color: 'var(--brand-primary)', fontWeight: 600 }}>Go to Admin Dashboard</Link>
             </div>
           )}
 

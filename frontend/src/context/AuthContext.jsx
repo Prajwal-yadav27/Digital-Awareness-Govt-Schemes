@@ -27,6 +27,7 @@ const persistAuth = (token, user) => {
     formattedCreatedAt: user.formattedCreatedAt || null,
     phone: user.phone || null,
     phoneVerified: user.phoneVerified || false,
+    profileImage: user.profileImage || null,
     notificationPreferences: user.notificationPreferences || { inApp: true, email: true, sms: false },
     isOrganizerVerified: user.isOrganizerVerified || false
   }));
@@ -117,6 +118,7 @@ export const AuthProvider = ({ children }) => {
             ...parsedUser,
             phone: parsedUser.phone || null,
             phoneVerified: parsedUser.phoneVerified || false,
+            profileImage: parsedUser.profileImage || null,
             notificationPreferences: parsedUser.notificationPreferences || { inApp: true, email: true, sms: false },
             isOrganizerVerified: parsedUser.isOrganizerVerified || false
           });
@@ -149,6 +151,7 @@ export const AuthProvider = ({ children }) => {
       formattedCreatedAt: data.formattedCreatedAt || null,
       phone: data.phone || null,
       phoneVerified: data.phoneVerified || false,
+      profileImage: data.profileImage || null,
       notificationPreferences: data.notificationPreferences || { inApp: true, email: true, sms: false },
       isOrganizerVerified: data.isOrganizerVerified || false
     });
@@ -170,6 +173,7 @@ export const AuthProvider = ({ children }) => {
       formattedCreatedAt: data.formattedCreatedAt || null,
       phone: data.phone || null,
       phoneVerified: data.phoneVerified || false,
+      profileImage: data.profileImage || null,
       notificationPreferences: data.notificationPreferences || { inApp: true, email: true, sms: false },
       isOrganizerVerified: data.isOrganizerVerified || false
     });
@@ -198,6 +202,7 @@ export const AuthProvider = ({ children }) => {
           formattedCreatedAt: data.formattedCreatedAt || base.formattedCreatedAt || null,
           phone: data.phone || null,
           phoneVerified: data.phoneVerified || false,
+          profileImage: data.profileImage || base.profileImage || null,
           notificationPreferences: data.notificationPreferences || base.notificationPreferences || { inApp: true, email: true, sms: false },
           isOrganizerVerified: data.isOrganizerVerified || false
         };
@@ -226,6 +231,7 @@ export const AuthProvider = ({ children }) => {
       formattedCreatedAt: user.formattedCreatedAt || null,
       phone: user.phone || null,
       phoneVerified: user.phoneVerified || false,
+      profileImage: user.profileImage || null,
       notificationPreferences: user.notificationPreferences || { inApp: true, email: true, sms: false },
       isOrganizerVerified: user.isOrganizerVerified || false
     });

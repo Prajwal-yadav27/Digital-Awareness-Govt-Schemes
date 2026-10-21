@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { API_BASE_URL } from '../services/api';
-import { lazy, Suspense } from 'react';
-const Government3DScene = lazy(() => import('../components/Government3DScene'));
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +14,7 @@ const Register = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { register } = useAuth();
   const { completeOAuthLogin } = useAuth();
@@ -57,51 +56,31 @@ const Register = () => {
 
   return (
     <div className="page-wrapper page-auth page-register">
-      <Suspense fallback={null}>
-        <Government3DScene variant="auth" />
-      </Suspense>
       <div className="auth-split-layout">
-        {/* Left Visual Panel — Cinematic 3D Government */}
+        {/* Left Visual Panel */}
         <div className="auth-visual-panel" aria-hidden="true">
-          <div className="auth-visual-overlay" aria-hidden="true"></div>
-          <div className="auth-visual-bg">
-            <div className="auth-glow auth-glow-1"></div>
-            <div className="auth-glow auth-glow-2"></div>
-            <div className="auth-glow auth-glow-3"></div>
-            <div className="auth-shape auth-shape-1"></div>
-            <div className="auth-shape auth-shape-2"></div>
-            <div className="auth-shape auth-shape-3"></div>
-          </div>
           <div className="auth-visual-content">
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '999px', background: 'rgba(56,189,248,0.12)', border: '1px solid rgba(56,189,248,0.20)', color: '#7dd3fc', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '16px' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '999px', background: 'rgba(216,188,133,0.14)', border: '1px solid rgba(216,188,133,0.35)', color: '#F5E6C7', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '16px' }}>
               <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px rgba(34,197,94,0.5)' }}></span>
               Digital Government Platform
             </div>
             <h1 className="auth-visual-title" style={{ fontSize: '1.9rem', lineHeight: 1.15 }}>Join GovSchemes Portal</h1>
-            <p style={{ fontSize: '1.05rem', fontWeight: 700, background: 'linear-gradient(135deg, #38bdf8, #22d3ee 50%, #a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', margin: '8px 0 12px', lineHeight: 1.3 }}>
+            <p style={{ fontSize: '1.05rem', fontWeight: 700, background: 'linear-gradient(135deg, #F5E6C7, #D8BC85 55%, #B99A62)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', margin: '8px 0 12px', lineHeight: 1.3 }}>
               Government Services,<br/>Built for Every Citizen
             </p>
             <p className="auth-visual-subtitle">Create an account to bookmark schemes, track your interests, and stay updated on government welfare programs.</p>
-            <div className="login-3d-scene" aria-hidden="true">
-              <div className="login-float-card">
-                <span className="login-float-icon" style={{ background: 'rgba(34,197,94,0.14)', borderColor: 'rgba(34,197,94,0.22)', color: '#4ade80' }}>🌾</span>
-                <span><strong style={{ color: '#fff', fontSize: '0.82rem' }}>Agriculture</strong><br/><span style={{ color: 'rgba(255,255,255,0.68)', fontSize: '0.70rem' }}>Farmer Support</span></span>
+            <div className="auth-highlights" aria-hidden="true">
+              <div className="auth-highlight-card">
+                <span className="auth-highlight-icon">🔖</span>
+                <span><strong>Bookmark schemes</strong><br /><span>Track what matters</span></span>
               </div>
-              <div className="login-float-card">
-                <span className="login-float-icon" style={{ background: 'rgba(59,130,246,0.14)', borderColor: 'rgba(59,130,246,0.22)', color: '#60a5fa' }}>🎓</span>
-                <span><strong style={{ color: '#fff', fontSize: '0.82rem' }}>Education</strong><br/><span style={{ color: 'rgba(255,255,255,0.68)', fontSize: '0.70rem' }}>Student Scholarships</span></span>
+              <div className="auth-highlight-card">
+                <span className="auth-highlight-icon">🎟️</span>
+                <span><strong>Join events</strong><br /><span>Register in minutes</span></span>
               </div>
-              <div className="login-float-card">
-                <span className="login-float-icon" style={{ background: 'rgba(236,72,153,0.14)', borderColor: 'rgba(236,72,153,0.22)', color: '#f472b6' }}>👩</span>
-                <span><strong style={{ color: '#fff', fontSize: '0.82rem' }}>Women & Child</strong><br/><span style={{ color: 'rgba(255,255,255,0.68)', fontSize: '0.70rem' }}>Women Empowerment</span></span>
-              </div>
-              <div className="login-float-card">
-                <span className="login-float-icon" style={{ background: 'rgba(239,68,68,0.12)', borderColor: 'rgba(239,68,68,0.20)', color: '#f87171' }}>🏥</span>
-                <span><strong style={{ color: '#fff', fontSize: '0.82rem' }}>Healthcare</strong><br/><span style={{ color: 'rgba(255,255,255,0.68)', fontSize: '0.70rem' }}>Health & Welfare</span></span>
-              </div>
-              <div className="login-float-card">
-                <span className="login-float-icon" style={{ background: 'rgba(139,92,246,0.14)', borderColor: 'rgba(139,92,246,0.22)', color: '#a78bfa' }}>🏛️</span>
-                <span><strong style={{ color: '#fff', fontSize: '0.82rem' }}>Citizen Services</strong><br/><span style={{ color: 'rgba(255,255,255,0.68)', fontSize: '0.70rem' }}>Digital Access</span></span>
+              <div className="auth-highlight-card">
+                <span className="auth-highlight-icon">🔔</span>
+                <span><strong>Stay updated</strong><br /><span>Deadlines &amp; alerts</span></span>
               </div>
             </div>
           </div>
@@ -154,7 +133,7 @@ const Register = () => {
                 <label className="form-label" htmlFor="reg-password">Password</label>
                 <input
                   id="reg-password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
@@ -170,7 +149,7 @@ const Register = () => {
                 <label className="form-label" htmlFor="reg-confirm">Confirm Password</label>
                 <input
                   id="reg-confirm"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
@@ -180,6 +159,18 @@ const Register = () => {
                   disabled={loading}
                   autoComplete="new-password"
                 />
+              </div>
+
+              <div className="form-group" style={{ marginTop: '-4px' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                  <input
+                    type="checkbox"
+                    checked={showPassword}
+                    onChange={(e) => setShowPassword(e.target.checked)}
+                    disabled={loading}
+                  />
+                  Show passwords
+                </label>
               </div>
 
               <div className="form-group">

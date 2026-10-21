@@ -165,7 +165,7 @@ const RegistrationDetails = () => {
           }
         },
         prefill: { name: registration.name, email: registration.email, contact: registration.phone },
-        theme: { color: '#2563eb' },
+        theme: { color: 'var(--brand-primary)' },
         modal: { ondismiss: () => { addToast('Payment cancelled. You can retry.', 'warning'); } }
       };
       new window.Razorpay(options).open();
@@ -226,7 +226,7 @@ const RegistrationDetails = () => {
               <div className="scheme-detail-meta">
                 <span className={`status-badge ${registration.status === 'Confirmed' ? 'status-active' : registration.status === 'Rejected' || registration.status === 'Cancelled' ? 'status-inactive' : 'status-draft'}`}>{registration.status}</span>
                 <span className="category-badge">ID: {String(registration._id).slice(-8)}</span>
-                <span style={{ fontSize: '0.82rem', color: '#64748b' }}>Registered: {formatDate(registration.createdAt)}</span>
+                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Registered: {formatDate(registration.createdAt)}</span>
               </div>
             </div>
             {isOwner && canCancel && (
@@ -243,7 +243,7 @@ const RegistrationDetails = () => {
                 <h2 className="scheme-section-title">Registration Information</h2>
               </div>
               <div className="scheme-section-body" style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.92rem' }}>
-                <div><strong>Registration ID:</strong> <span style={{ fontFamily: 'ui-monospace', fontSize: '0.82rem', background: '#f1f5f9', padding: '2px 6px', borderRadius: '6px' }}>{registration._id}</span></div>
+                <div><strong>Registration ID:</strong> <span style={{ fontFamily: 'ui-monospace', fontSize: '0.82rem', background: 'var(--surface-muted)', padding: '2px 6px', borderRadius: '6px' }}>{registration._id}</span></div>
                 <div><strong>Name:</strong> {registration.name}</div>
                 <div><strong>Email:</strong> {registration.email}</div>
                 <div><strong>Phone:</strong> {registration.phone}</div>
@@ -264,13 +264,13 @@ const RegistrationDetails = () => {
                 {ev.isPaidEvent && ev.registrationFee > 0 ? (
                   <>
                     <div><strong>Fee per guest:</strong> ₹{ev.registrationFee}</div>
-                    <div><strong>Total:</strong> ₹{ev.registrationFee * registration.numberOfGuests} <span style={{ color: '#64748b', fontSize: '0.8rem' }}>({registration.numberOfGuests} guests)</span></div>
+                    <div><strong>Total:</strong> ₹{ev.registrationFee * registration.numberOfGuests} <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>({registration.numberOfGuests} guests)</span></div>
                     <div>
                       <strong>Payment Status:</strong>{' '}
                       <span className={`status-badge ${registration.paymentStatus === 'Paid' ? 'status-active' : registration.paymentStatus === 'Pending' ? 'status-draft' : registration.paymentStatus === 'Failed' ? 'status-inactive' : registration.paymentStatus === 'Refunded' ? 'status-inactive' : 'status-draft'}`}>{registration.paymentStatus || 'Unpaid'}</span>
                     </div>
                     {payment?.status === 'Refunded' && (
-                      <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '10px', padding: '10px 12px', fontSize: '0.85rem', color: '#991b1b' }}>
+                      <div style={{ background: 'var(--danger-subtle)', border: '1px solid var(--danger)', borderRadius: '10px', padding: '10px 12px', fontSize: '0.85rem', color: 'var(--danger)' }}>
                         <div><strong>⛔ Refunded</strong>{payment.refundAmount != null && <> — ₹{payment.refundAmount}</>}</div>
                         {payment.razorpayRefundId && <div style={{ fontSize: '0.78rem', marginTop: '4px' }}>Refund ID: <span style={{ fontFamily: 'ui-monospace, monospace' }}>{payment.razorpayRefundId}</span></div>}
                         {payment.refundedAt && <div style={{ fontSize: '0.78rem', marginTop: '2px' }}>Refunded: {formatDate(payment.refundedAt)}</div>}
@@ -278,7 +278,7 @@ const RegistrationDetails = () => {
                     )}
                     {user?.role === 'admin' && payment?.status === 'Paid' && (
                       <div>
-                        <button type="button" className="btn-secondary" onClick={() => setIsRefundOpen(true)} style={{ borderColor: '#fde68a', color: '#92400e', background: '#fffbeb', fontWeight: 700 }}>
+                        <button type="button" className="btn-secondary" onClick={() => setIsRefundOpen(true)} style={{ borderColor: 'var(--warning)', color: 'var(--warning)', background: 'var(--warning-subtle)', fontWeight: 700 }}>
                           Refund Payment
                         </button>
                       </div>
@@ -309,31 +309,31 @@ const RegistrationDetails = () => {
 
           {/* Status-specific ticket / message */}
           {registration.status === 'Confirmed' && (
-            <div style={{ marginTop: '16px', background: '#f0fdf4', border: '1px solid #dcfce7', borderRadius: '12px', padding: '16px', textAlign: 'center' }}>
-              <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#15803d', marginBottom: '6px' }}>Registration Confirmed</div>
-              <p style={{ fontSize: '0.85rem', color: '#334155', marginBottom: '12px' }}>Your registration has been confirmed. View your digital ticket with QR code.</p>
+            <div style={{ marginTop: '16px', background: 'var(--success-subtle)', border: '1px solid var(--success)', borderRadius: '12px', padding: '16px', textAlign: 'center' }}>
+              <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--success)', marginBottom: '6px' }}>Registration Confirmed</div>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '12px' }}>Your registration has been confirmed. View your digital ticket with QR code.</p>
               <Link to={`/registrations/${registration._id}/ticket`} className="btn-primary" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>🎟 View Digital Ticket</Link>
             </div>
           )}
           {registration.status === 'Pending' && (
-            <div style={{ marginTop: '16px', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '12px', padding: '14px', textAlign: 'center', fontSize: '0.9rem', color: '#92400e', fontWeight: 600 }}>
+            <div style={{ marginTop: '16px', background: 'var(--warning-subtle)', border: '1px solid var(--warning)', borderRadius: '12px', padding: '14px', textAlign: 'center', fontSize: '0.9rem', color: 'var(--warning)', fontWeight: 600 }}>
               Waiting for organizer confirmation
             </div>
           )}
           {registration.status === 'Rejected' && (
-            <div style={{ marginTop: '16px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '12px', padding: '14px', textAlign: 'center', fontSize: '0.9rem', color: '#b91c1c', fontWeight: 600 }}>
+            <div style={{ marginTop: '16px', background: 'var(--danger-subtle)', border: '1px solid var(--danger)', borderRadius: '12px', padding: '14px', textAlign: 'center', fontSize: '0.9rem', color: 'var(--danger)', fontWeight: 600 }}>
               Registration rejected
             </div>
           )}
           {registration.status === 'Cancelled' && (
-            <div style={{ marginTop: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '14px', textAlign: 'center', fontSize: '0.9rem', color: '#64748b', fontWeight: 600 }}>
+            <div style={{ marginTop: '16px', background: 'var(--surface-muted)', border: '1px solid var(--border)', borderRadius: '12px', padding: '14px', textAlign: 'center', fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 600 }}>
               Registration cancelled
             </div>
           )}
 
-          <div className="scheme-detail-cta-footer" style={{ display: 'flex', gap: '12px', paddingTop: '20px', marginTop: '20px', borderTop: '1px solid #f1f5f9', flexWrap: 'wrap' }}>
+          <div className="scheme-detail-cta-footer" style={{ display: 'flex', gap: '12px', paddingTop: '20px', marginTop: '20px', borderTop: '1px solid var(--surface-muted)', flexWrap: 'wrap' }}>
             {isOwner && ev.isPaidEvent && ev.registrationFee > 0 && registration.paymentStatus !== 'Paid' && registration.status === 'Pending' && (
-              <button className="btn-primary" onClick={handlePayNow} disabled={isPaying} style={{ background: '#f59e0b', borderColor: '#f59e0b' }}>{isPaying ? 'Processing...' : `Pay Now ₹${ev.registrationFee * registration.numberOfGuests}`}</button>
+              <button className="btn-primary" onClick={handlePayNow} disabled={isPaying} style={{ background: 'var(--accent)', borderColor: 'var(--accent)' }}>{isPaying ? 'Processing...' : `Pay Now ₹${ev.registrationFee * registration.numberOfGuests}`}</button>
             )}
             {isOwner && canCancel && (
               <button className="btn-danger" onClick={() => setIsCancelOpen(true)}>Cancel Registration</button>
@@ -345,7 +345,7 @@ const RegistrationDetails = () => {
             <Link to={ev._id ? `/events/${ev._id}` : '/events'} className="btn-secondary">View Event</Link>
           </div>
           {!canCancel && registration.status !== 'Confirmed' && registration.status !== 'Pending' && (
-            <div style={{ marginTop: '10px', fontSize: '0.82rem', color: '#94a3b8', textAlign: 'center' }}>
+            <div style={{ marginTop: '10px', fontSize: '0.82rem', color: 'var(--text-muted)', textAlign: 'center' }}>
               {registration.status === 'Cancelled' ? 'This registration is already cancelled.' : 'Cancellation not available for this status.'}
             </div>
           )}

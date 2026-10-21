@@ -15,6 +15,7 @@ const Profile = () => {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showDeletePhoneConfirm, setShowDeletePhoneConfirm] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
+  const [avatarError, setAvatarError] = useState(false);
   const [registrations, setRegistrations] = useState([]);
   const [payments, setPayments] = useState([]);
   const [loadingRegs, setLoadingRegs] = useState(false);
@@ -235,10 +236,15 @@ const Profile = () => {
     <div className="page-wrapper page-profile">
       <div className="page-container" style={{ maxWidth: '1100px' }}>
         <div className="profile-wrapper fade-in">
+          <div className="profile-cover" aria-hidden="true" />
           {/* Profile header */}
-          <section className="profile-hero" style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap', padding: '24px', borderRadius: '16px', background: 'var(--bg-card)', border: '1px solid var(--border)', boxShadow: 'var(--pro-shadow-sm)' }}>
-            <div className="profile-avatar-large" style={{ width: '76px', height: '76px', borderRadius: '50%', display: 'grid', placeItems: 'center', fontSize: '1.9rem', fontWeight: 800, color: '#fff', background: '#2563eb', flexShrink: 0 }} aria-hidden="true">
-              {user.name.charAt(0).toUpperCase()}
+          <section className="profile-hero profile-hero-overlap" style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap', padding: '24px', borderRadius: '16px', background: 'var(--bg-card)', border: '1px solid var(--border)', boxShadow: 'var(--pro-shadow-sm)' }}>
+            <div className="profile-avatar-large" style={{ width: '76px', height: '76px', borderRadius: '50%', display: 'grid', placeItems: 'center', fontSize: '1.9rem', fontWeight: 800, color: 'var(--brand-text-on-primary)', background: 'var(--brand-primary)', flexShrink: 0 }} aria-hidden="true">
+              {user.profileImage && !avatarError ? (
+                <img src={user.profileImage} alt="" onError={() => setAvatarError(true)} referrerPolicy="no-referrer" />
+              ) : (
+                user.name.charAt(0).toUpperCase()
+              )}
             </div>
             <div className="profile-info-block" style={{ flex: 1, minWidth: '200px' }}>
               <h1 className="profile-name" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{user.name}</h1>
@@ -257,23 +263,26 @@ const Profile = () => {
                 {formattedDate && <span className="pro-meta-chip">📅 Joined {formattedDate}</span>}
               </div>
             </div>
-            <div style={{ display: 'flex', gap: '10px' }}>
+            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+              <button type="button" className="btn-primary" onClick={openPhoneModal}>
+                {user.phone ? (user.phoneVerified ? 'Manage Phone' : 'Verify Phone') : 'Add Phone'}
+              </button>
               <Link to="/my-registrations" className="btn-secondary" style={{ textDecoration: 'none' }}>My Events</Link>
-              <button type="button" className="btn-secondary" onClick={() => setShowLogoutConfirm(true)} style={{ borderColor: 'rgba(239,68,68,0.22)', color: '#ef4444' }}>Logout</button>
+              <button type="button" className="btn-secondary" onClick={() => setShowLogoutConfirm(true)} style={{ borderColor: 'var(--danger)', color: 'var(--danger)' }} aria-label="Log out of your account">Logout</button>
             </div>
           </section>
 
           {/* Stats — neon */}
           <div className="profile-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '14px', marginTop: '18px' }}>
             {[
-              { icon: '⭐', label: 'Bookmarks', value: bookmarkedCount, loading: false, to: '/bookmarks', color: '#f59e0b' },
-              { icon: '🎟️', label: 'Registered', value: registrations.length, loading: loadingRegs, to: '/my-registrations', color: '#38bdf8' },
-              { icon: '✅', label: 'Confirmed', value: confirmedCount, loading: loadingRegs, to: '/my-registrations', color: '#22c55e' },
-              { icon: '🎫', label: 'Tickets', value: ticketsCount, loading: loadingRegs, to: '/my-registrations', color: '#a855f7' },
-              { icon: '💳', label: 'Payments', value: payments.length, loading: loadingPays, to: '/my-registrations', color: '#06b6d4' },
+              { icon: '⭐', label: 'Bookmarks', value: bookmarkedCount, loading: false, to: '/bookmarks', color: 'var(--accent)' },
+              { icon: '🎟️', label: 'Registered', value: registrations.length, loading: loadingRegs, to: '/my-registrations', color: 'var(--brand-primary)' },
+              { icon: '✅', label: 'Confirmed', value: confirmedCount, loading: loadingRegs, to: '/my-registrations', color: 'var(--success)' },
+              { icon: '🎫', label: 'Tickets', value: ticketsCount, loading: loadingRegs, to: '/my-registrations', color: 'var(--accent-text)' },
+              { icon: '💳', label: 'Payments', value: payments.length, loading: loadingPays, to: '/my-registrations', color: 'var(--info)' },
             ].map(s => (
               <div key={s.label} className="profile-stat-card" style={{ padding: '16px', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '14px', background: 'var(--bg-card)', border: '1px solid var(--border)', boxShadow: 'var(--pro-shadow-sm)' }}>
-                <div style={{ width: '42px', height: '42px', borderRadius: '12px', display: 'grid', placeItems: 'center', background: `${s.color}14`, border: `1px solid ${s.color}22`, color: s.color, fontSize: '1.1rem' }}>{s.icon}</div>
+                <div style={{ width: '42px', height: '42px', borderRadius: '12px', display: 'grid', placeItems: 'center', background: 'var(--surface-muted)', border: '1px solid var(--border)', color: s.color, fontSize: '1.1rem' }}>{s.icon}</div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1 }}>{s.loading ? '0' : s.value}</div>
                   <div style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginTop: '2px' }}>{s.label}</div>
@@ -298,7 +307,7 @@ const Profile = () => {
                 aria-pressed={activeTab===t.id}
                 style={{
                   padding: '8px 14px', borderRadius: '999px', fontSize: '0.82rem', fontWeight: 700,
-                  border: `1px solid ${activeTab===t.id ? '#bfdbfe' : 'var(--border)'}`,
+                  border: `1px solid ${activeTab===t.id ? 'var(--border-strong)' : 'var(--border)'}`,
                   background: activeTab===t.id ? 'var(--pro-brand-50)' : 'var(--bg-card)',
                   color: activeTab===t.id ? 'var(--pro-brand-700)' : 'var(--text-secondary)',
                   cursor: 'pointer', transition: 'all 180ms ease'
@@ -313,39 +322,123 @@ const Profile = () => {
           <div style={{ marginTop: '16px' }}>
             {activeTab==='overview' && (
               <div style={{ display: 'grid', gap: '14px' }}>
+                <section aria-labelledby="profile-personal-heading">
+                  <h2 id="profile-personal-heading" className="pro-section-eyebrow">Personal Information</h2>
+                  <div style={{ padding: '18px', borderRadius: '16px', background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+                    <dl className="pro-def-grid" style={{ margin: 0 }}>
+                      <div className="pro-def-item">
+                        <dt>Display name</dt>
+                        <dd>{user.name}</dd>
+                      </div>
+                      <div className="pro-def-item">
+                        <dt>Email address</dt>
+                        <dd>{user.email}<span className="sub">Used for sign-in and account notices</span></dd>
+                      </div>
+                      <div className="pro-def-item">
+                        <dt>Account role</dt>
+                        <dd style={{ textTransform: 'capitalize' }}>{user.role}{user.role === 'organizer' && user.isOrganizerVerified ? ' · Verified' : ''}</dd>
+                      </div>
+                      <div className="pro-def-item">
+                        <dt>Member since</dt>
+                        <dd>{formattedDate || '—'}</dd>
+                      </div>
+                      <div className="pro-def-item">
+                        <dt>Bookmarks</dt>
+                        <dd>{bookmarkedCount} schemes</dd>
+                      </div>
+                      <div className="pro-def-item">
+                        <dt>Registrations</dt>
+                        <dd>{registrations.length} events{confirmedCount>0 && ` (${confirmedCount} confirmed)`}</dd>
+                      </div>
+                    </dl>
+                  </div>
+                </section>
+                <section aria-labelledby="profile-prefs-heading">
+                  <h2 id="profile-prefs-heading" className="pro-section-eyebrow">Preferences</h2>
                 <div style={{ padding: '18px', borderRadius: '16px', background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
-                  <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}><span style={{ color: 'var(--primary)' }}>●</span> Account Overview</h3>
-                  <div style={{ display: 'grid', gap: '8px', fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
-                    <div><strong style={{ color: 'var(--text-primary)' }}>Email:</strong> {user.email}</div>
-                    <div><strong style={{ color: 'var(--text-primary)' }}>Role:</strong> {user.role}</div>
-                    <div><strong style={{ color: 'var(--text-primary)' }}>Member since:</strong> {formattedDate || '—'}</div>
-                    <div><strong style={{ color: 'var(--text-primary)' }}>Bookmarks:</strong> {bookmarkedCount} schemes</div>
-                    <div><strong style={{ color: 'var(--text-primary)' }}>Registrations:</strong> {registrations.length} events {confirmedCount>0 && `(${confirmedCount} confirmed)`}</div>
+                  <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>Notification Preferences</h3>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '8px' }}>Choose how you receive updates about schemes, events and tickets.</p>
+                  {[
+                    { id: 'inApp', label: 'In-app notifications', desc: 'Updates inside the portal' },
+                    { id: 'email', label: 'Email notifications', desc: 'Deadlines and event changes by email' },
+                    { id: 'sms', label: 'SMS notifications', desc: 'Requires a verified phone number' },
+                  ].map(p => (
+                    <label key={p.id} className="pro-pref-row" style={{ cursor: 'pointer' }}>
+                      <span>
+                        <span style={{ display: 'block', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-primary)' }}>{p.label}</span>
+                        <span style={{ display: 'block', fontSize: '0.78rem', color: 'var(--text-muted)' }}>{p.desc}</span>
+                      </span>
+                      <input
+                        type="checkbox"
+                        checked={!!notificationPrefs[p.id]}
+                        onChange={(e) => setNotificationPrefs(prev => ({ ...prev, [p.id]: e.target.checked }))}
+                        aria-label={p.label}
+                        style={{ width: '20px', height: '20px', accentColor: 'var(--brand-primary)', flexShrink: 0 }}
+                      />
+                    </label>
+                  ))}
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    onClick={handleSavePreferences}
+                    disabled={prefsLoading}
+                    style={{ marginTop: '12px' }}
+                  >
+                    {prefsLoading ? 'Saving…' : 'Save Preferences'}
+                  </button>
+                </div>
+                </section>
+                <section aria-labelledby="profile-security-heading">
+                  <h2 id="profile-security-heading" className="pro-section-eyebrow">Security &amp; Verification</h2>
+                  <div style={{ padding: '18px', borderRadius: '16px', background: 'var(--bg-card)', border: '1px solid var(--border)', display: 'grid', gap: '14px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-                      <div><strong style={{ color: 'var(--text-primary)' }}>Phone:</strong> {formatPhone(user.phone)}</div>
+                      <div style={{ flex: 1, minWidth: '200px' }}>
+                        <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-primary)' }}>Phone number</div>
+                        <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginTop: '2px' }}>{formatPhone(user.phone)}</div>
+                      </div>
                       {user.phone ? (
                         <span style={{
                           padding: '2px 8px',
                           borderRadius: '999px',
                           fontSize: '0.7rem',
                           fontWeight: 700,
-                          background: user.phoneVerified ? 'rgba(34,197,94,0.14)' : 'rgba(245,158,11,0.14)',
-                          border: `1px solid ${user.phoneVerified ? 'rgba(34,197,94,0.22)' : 'rgba(245,158,11,0.22)'}`,
-                          color: user.phoneVerified ? '#22c55e' : '#f59e0b'
+                          background: user.phoneVerified ? 'var(--success-subtle)' : 'var(--warning-subtle)',
+                          border: `1px solid ${user.phoneVerified ? 'var(--success)' : 'var(--warning)'}`,
+                          color: user.phoneVerified ? 'var(--success)' : 'var(--warning)'
                         }}>
                           {user.phoneVerified ? '✓ Verified' : 'Not Verified'}
                         </span>
                       ) : null}
                       <button
+                        type="button"
                         className="btn-secondary"
-                        style={{ padding: '4px 12px', fontSize: '0.75rem', height: 'auto' }}
+                        style={{ padding: '6px 14px', fontSize: '0.78rem', height: 'auto' }}
                         onClick={openPhoneModal}
                       >
                         {user.phone ? (user.phoneVerified ? 'Change' : 'Verify') : 'Add Phone'}
                       </button>
                     </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', borderTop: '1px solid var(--border)', paddingTop: '14px' }}>
+                      <div style={{ flex: 1, minWidth: '200px' }}>
+                        <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-primary)' }}>Password</div>
+                        <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginTop: '2px' }}>Reset your password by email at any time.</div>
+                      </div>
+                      <Link to="/forgot-password" className="btn-secondary" style={{ padding: '6px 14px', fontSize: '0.78rem', height: 'auto', textDecoration: 'none' }}>Reset Password</Link>
+                    </div>
+                    <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', margin: 0 }}>Verification badges always reflect the saved account state — never a pending or unconfirmed action.</p>
+                  </div>
+                </section>
+                <section aria-labelledby="profile-links-heading">
+                  <h2 id="profile-links-heading" className="pro-section-eyebrow">Quick Links</h2>
+                <div style={{ padding: '18px', borderRadius: '16px', background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+                  <div className="pro-quick-grid">
+                    <Link to="/bookmarks" className="pro-quick-link-card">⭐ Bookmarks <span>→</span></Link>
+                    <Link to="/my-registrations" className="pro-quick-link-card">🎟️ Registrations <span>→</span></Link>
+                    <Link to="/notifications" className="pro-quick-link-card">🔔 Notifications <span>→</span></Link>
+                    <Link to="/events" className="pro-quick-link-card">📅 Browse Events <span>→</span></Link>
                   </div>
                 </div>
+                </section>
                 {user.role === 'admin' && (
                   <div style={{ padding: '18px', borderRadius: '16px', background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
                     <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '10px' }}>Admin Access</h3>
@@ -368,7 +461,7 @@ const Profile = () => {
                   <div style={{ display: 'grid', gap: '10px' }}>
                     {registrations.slice(0,10).map(r => (
                       <div key={r._id} style={{ display: 'flex', gap: '12px', alignItems: 'center', padding: '12px', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '12px' }}>
-                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: r.status==='Confirmed' ? '#22c55e' : r.status==='Pending' ? '#f59e0b' : '#ef4444', boxShadow: `0 0 8px ${r.status==='Confirmed' ? '#22c55e55' : '#f59e0b55'}`, flexShrink: 0 }} />
+                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: r.status==='Confirmed' ? 'var(--success)' : r.status==='Pending' ? 'var(--accent)' : 'var(--danger)', flexShrink: 0 }} />
                         <div style={{ flex: 1, minWidth: 0 }}>
                           <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.event?.title || 'Event'}</div>
                           <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{r.status} · {r.paymentStatus || 'Unpaid'} {r.ticketStatus==='Active' && '· 🎫 Ticket'}</div>
@@ -399,12 +492,12 @@ const Profile = () => {
                   <div style={{ display: 'grid', gap: '10px' }}>
                     {payments.slice(0,10).map(p => (
                       <div key={p._id} style={{ display: 'flex', gap: '12px', alignItems: 'center', padding: '12px', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '12px' }}>
-                        <div style={{ width: '36px', height: '36px', borderRadius: '10px', display: 'grid', placeItems: 'center', background: p.status==='Paid' ? 'rgba(34,197,94,0.12)' : 'rgba(245,158,11,0.12)', border: `1px solid ${p.status==='Paid' ? 'rgba(34,197,94,0.22)' : 'rgba(245,158,11,0.22)'}`, color: p.status==='Paid' ? '#22c55e' : '#f59e0b' }}>{p.status==='Paid' ? '✓' : '⏳'}</div>
+                        <div style={{ width: '36px', height: '36px', borderRadius: '10px', display: 'grid', placeItems: 'center', background: p.status==='Paid' ? 'var(--success-subtle)' : 'var(--warning-subtle)', border: `1px solid ${p.status==='Paid' ? 'var(--success)' : 'var(--warning)'}`, color: p.status==='Paid' ? 'var(--success)' : 'var(--accent)' }}>{p.status==='Paid' ? '✓' : '⏳'}</div>
                         <div style={{ flex: 1 }}>
                           <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.9rem' }}>{p.event?.title || 'Event'} — {p.status}</div>
                           <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>₹{p.amount} · {p.currency} {p.razorpayOrderId ? `· ${p.razorpayOrderId.slice(-8)}` : ''}</div>
                         </div>
-                        <span style={{ fontSize: '0.72rem', padding: '4px 8px', borderRadius: '999px', background: p.status==='Paid' ? 'rgba(34,197,94,0.12)' : 'rgba(148,163,184,0.12)', color: p.status==='Paid' ? '#22c55e' : 'var(--text-muted)', border: `1px solid ${p.status==='Paid' ? 'rgba(34,197,94,0.18)' : 'var(--border)'}`, fontWeight: 700 }}>{p.status}</span>
+                        <span style={{ fontSize: '0.72rem', padding: '4px 8px', borderRadius: '999px', background: p.status==='Paid' ? 'var(--success-subtle)' : 'rgba(148,163,184,0.12)', color: p.status==='Paid' ? 'var(--success)' : 'var(--text-muted)', border: `1px solid ${p.status==='Paid' ? 'var(--success)' : 'var(--border)'}`, fontWeight: 700 }}>{p.status}</span>
                       </div>
                     ))}
                   </div>
@@ -429,7 +522,7 @@ const Profile = () => {
             </p>
 
             {phoneError && (
-              <div style={{ background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.22)', color: '#ef4444', padding: '10px 12px', borderRadius: '8px', fontSize: '0.8rem', marginBottom: '16px' }}>
+              <div style={{ background: 'var(--danger-subtle)', border: '1px solid var(--danger)', color: 'var(--danger)', padding: '10px 12px', borderRadius: '8px', fontSize: '0.8rem', marginBottom: '16px' }}>
                 {phoneError}
               </div>
             )}
@@ -472,7 +565,7 @@ const Profile = () => {
                     className="btn-secondary btn-full"
                     onClick={() => setShowDeletePhoneConfirm(true)}
                     disabled={phoneLoading}
-                    style={{ marginTop: '8px', borderColor: 'rgba(239,68,68,0.22)', color: '#ef4444' }}
+                    style={{ marginTop: '8px', borderColor: 'var(--danger)', color: 'var(--danger)' }}
                   >
                     Remove phone number
                   </button>

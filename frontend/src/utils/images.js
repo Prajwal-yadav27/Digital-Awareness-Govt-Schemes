@@ -1,39 +1,43 @@
 import { coverPlaceholder } from './placeholder';
 
 /**
- * Category → curated Unsplash image (real-world, government-relevant).
- * Fallback chain: DB imageUrl → category image → placeholder SVG.
- * All URLs are stable, CDN-cached, and use `w=640&h=400&fit=crop` for consistent aspect ratio.
+ * Category → curated local imagery (see public/images/).
+ * Fallback chain: DB imageUrl → local category image → placeholder SVG.
+ * Local files are fixed Unsplash CDN photo IDs vendored into the repo
+ * (Unsplash License; same curation as before, zero hotlink risk), except
+ * hero-agriculture.jpg (farmers in India, verified free license).
+ * Transport reuses the neutral default: its former CDN URL no longer
+ * resolves, which is exactly why fallbacks are local now.
  */
 const SCHEME_IMAGES = {
-  Agriculture: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=640&h=400&fit=crop&auto=format',
-  Education: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=640&h=400&fit=crop&auto=format',
-  Healthcare: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=640&h=400&fit=crop&auto=format',
-  Health: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=640&h=400&fit=crop&auto=format',
-  'Housing & Urban': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=640&h=400&fit=crop&auto=format',
-  Housing: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=640&h=400&fit=crop&auto=format',
-  Employment: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=640&h=400&fit=crop&auto=format',
-  'Women & Child': 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=640&h=400&fit=crop&auto=format',
-  Finance: 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=640&h=400&fit=crop&auto=format',
-  Financial: 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=640&h=400&fit=crop&auto=format',
-  'Social Welfare': 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=640&h=400&fit=crop&auto=format',
-  Transport: 'https://images.unsplash.com/photo-1494515843206-f3117afe722f?w=640&h=400&fit=crop&auto=format',
-  Infrastructure: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=640&h=400&fit=crop&auto=format',
-  Technology: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=640&h=400&fit=crop&auto=format',
-  Sports: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=640&h=400&fit=crop&auto=format',
-  Default: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=640&h=400&fit=crop&auto=format',
+  Agriculture: '/images/card-agriculture.jpg',
+  Education: '/images/card-education.jpg',
+  Healthcare: '/images/card-healthcare.jpg',
+  Health: '/images/card-healthcare.jpg',
+  'Housing & Urban': '/images/card-housing.jpg',
+  Housing: '/images/card-housing.jpg',
+  Employment: '/images/card-employment.jpg',
+  'Women & Child': '/images/card-women-child.jpg',
+  Finance: '/images/card-finance.jpg',
+  Financial: '/images/card-finance.jpg',
+  'Social Welfare': '/images/card-welfare.jpg',
+  Transport: '/images/card-default.jpg',
+  Infrastructure: '/images/card-housing.jpg',
+  Technology: '/images/card-technology.jpg',
+  Sports: '/images/card-sports.jpg',
+  Default: '/images/card-default.jpg',
 };
 
 const EVENT_IMAGES = {
-  Health: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=640&h=400&fit=crop&auto=format',
-  Education: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=640&h=400&fit=crop&auto=format',
-  Agriculture: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=640&h=400&fit=crop&auto=format',
-  Welfare: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=640&h=400&fit=crop&auto=format',
-  Employment: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=640&h=400&fit=crop&auto=format',
-  'Skill Development': 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=640&h=400&fit=crop&auto=format',
-  'Public Safety': 'https://images.unsplash.com/photo-1494515843206-f3117afe722f?w=640&h=400&fit=crop&auto=format',
-  Awareness: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=640&h=400&fit=crop&auto=format',
-  Default: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=640&h=400&fit=crop&auto=format',
+  Health: '/images/card-event-health.jpg',
+  Education: '/images/card-event-education.jpg',
+  Agriculture: '/images/card-agriculture.jpg',
+  Welfare: '/images/card-welfare.jpg',
+  Employment: '/images/card-employment.jpg',
+  'Skill Development': '/images/card-event.jpg',
+  'Public Safety': '/images/card-default.jpg',
+  Awareness: '/images/card-event.jpg',
+  Default: '/images/card-event.jpg',
 };
 
 function isValidHttpUrl(str) {

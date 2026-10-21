@@ -248,10 +248,10 @@ const SchemeModal = ({ isOpen, onClose, onSubmit, mode = 'add', initialData = nu
   };
 
   const charColor = (len, max) => {
-    if (len === 0) return '#94a3b8';
-    if (len > max) return '#dc2626';
-    if (len > max * 0.9) return '#d97706';
-    return '#64748b';
+    if (len === 0) return 'var(--text-muted)';
+    if (len > max) return 'var(--danger)';
+    if (len > max * 0.9) return 'var(--warning)';
+    return 'var(--text-muted)';
   };
 
   // Live preview derived
@@ -491,8 +491,8 @@ const SchemeModal = ({ isOpen, onClose, onSubmit, mode = 'add', initialData = nu
                   </div>
                 )}
                 <div className="preview-docs">
-                  <span style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>{form.documentsRequired.length} document{form.documentsRequired.length !== 1 ? 's' : ''}</span>
-                  {form.documentsRequired.length > 0 && <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>· {form.documentsRequired.slice(0, 2).join(', ')}{form.documentsRequired.length > 2 ? ' +' + (form.documentsRequired.length - 2) : ''}</span>}
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>{form.documentsRequired.length} document{form.documentsRequired.length !== 1 ? 's' : ''}</span>
+                  {form.documentsRequired.length > 0 && <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>· {form.documentsRequired.slice(0, 2).join(', ')}{form.documentsRequired.length > 2 ? ' +' + (form.documentsRequired.length - 2) : ''}</span>}
                 </div>
               </div>
               <div className="preview-footer">

@@ -79,7 +79,7 @@ const Landing = () => {
           <div>
             <span className="pro-eyebrow">Central &amp; State government services</span>
             <h1 id="landing-hero-title" className="pro-hero-title">
-              Discover government schemes <span>and public events</span>
+              Digital Awareness Platform for Indian Government Schemes
             </h1>
             <p className="pro-hero-sub">
               Citizens can discover government welfare schemes and find relevant public events —
@@ -105,34 +105,17 @@ const Landing = () => {
               <p className="pro-search-hint">Uses the same search as the Schemes page — try “education”, “health”, or “agriculture”.</p>
             </form>
           </div>
-          <div className="pro-visual" aria-hidden="true">
-            <div className="pro-visual-head">
-              <span className="pro-visual-dot" />
-              <span className="pro-visual-dot" />
-              <span className="pro-visual-dot" />
-              <span className="pro-visual-title">GovSchemes Portal</span>
-            </div>
-            <div className="pro-visual-card">
-              <span className="pro-visual-tag">Central Govt</span>
-              <strong>Scholarship &amp; Education Support</strong>
-              <span>Eligibility · Benefits · Deadline</span>
-            </div>
-            <div className="pro-visual-card">
-              <span className="pro-visual-tag">State Govt</span>
-              <strong>Health &amp; Welfare Camp</strong>
-              <span>12 Dec · District venue · Free entry</span>
-            </div>
-            <div className="pro-visual-card">
-              <span className="pro-visual-tag">Saved</span>
-              <strong>Bookmarked schemes</strong>
-              <span>Track schemes you care about</span>
-            </div>
-            <div className="pro-visual-foot">
-              <span className="pro-visual-chip">Verified listings</span>
-              <span className="pro-visual-chip">Clear eligibility</span>
-              <span className="pro-visual-chip">Timely alerts</span>
-            </div>
-          </div>
+          <figure className="pro-hero-photo">
+            <img
+              src="/images/hero-farmer.jpg"
+              alt="A senior Indian farmer standing in a blooming mustard field"
+              fetchpriority="high"
+            />
+            <figcaption className="pro-hero-photo-caption">
+              <strong>Support for every farming family</strong>
+              <span>Agricultural schemes · Rural welfare · Timely alerts</span>
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -186,22 +169,22 @@ const Landing = () => {
           ) : (
             <div className="landing-stats-grid">
               <div className="landing-stat-card">
-                <div className="landing-stat-icon" style={{ background: 'rgba(59,130,246,0.12)', color: '#2563eb' }}>📊</div>
+                <div className="landing-stat-icon" style={{ background: 'var(--brand-subtle)', color: 'var(--brand-primary)' }}>📊</div>
                 <div className="landing-stat-value">{stats.totalSchemes ?? '—'}</div>
                 <div className="landing-stat-label">Total Schemes</div>
               </div>
               <div className="landing-stat-card">
-                <div className="landing-stat-icon" style={{ background: 'rgba(16,185,129,0.12)', color: '#059669' }}>✓</div>
+                <div className="landing-stat-icon" style={{ background: 'var(--success-subtle)', color: 'var(--success)' }}>✓</div>
                 <div className="landing-stat-value">{stats.activeSchemes ?? '—'}</div>
                 <div className="landing-stat-label">Active Schemes</div>
               </div>
               <div className="landing-stat-card">
-                <div className="landing-stat-icon" style={{ background: 'rgba(168,85,247,0.12)', color: '#7c3aed' }}>🎫</div>
+                <div className="landing-stat-icon" style={{ background: 'var(--accent-subtle)', color: 'var(--accent-text)' }}>🎫</div>
                 <div className="landing-stat-value">{stats.totalEvents ?? '—'}</div>
                 <div className="landing-stat-label">Government/Public Events</div>
               </div>
               <div className="landing-stat-card">
-                <div className="landing-stat-icon" style={{ background: 'rgba(245,158,11,0.12)', color: '#d97706' }}>👥</div>
+                <div className="landing-stat-icon" style={{ background: 'var(--warning-subtle)', color: 'var(--warning)' }}>👥</div>
                 <div className="landing-stat-value">{stats.totalUsers ?? '—'}</div>
                 <div className="landing-stat-label">Registered Citizens</div>
               </div>

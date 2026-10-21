@@ -138,16 +138,16 @@ const EventRegistrations = () => {
                     {registrations.map((reg) => (
                       <div key={reg._id} className="admin-table-row" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 0.9fr 0.5fr 0.6fr 0.6fr 1.1fr', padding: '10px 14px', alignItems: 'center' }}>
                         <div className="admin-table-cell">
-                          <div style={{ fontWeight: 600, color: '#0f172a' }}>{reg.name}</div>
-                          <div style={{ fontSize: '0.76rem', color: '#64748b' }}>{new Date(reg.createdAt).toLocaleDateString('en-IN')}</div>
+                          <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{reg.name}</div>
+                          <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>{new Date(reg.createdAt).toLocaleDateString('en-IN')}</div>
                         </div>
                         <div className="admin-table-cell" style={{ fontSize: '0.82rem' }}>
                           <div style={{ wordBreak: 'break-all' }}>{reg.email}</div>
-                          <div style={{ color: '#64748b', fontSize: '0.76rem' }}>{reg.phone}</div>
+                          <div style={{ color: 'var(--text-muted)', fontSize: '0.76rem' }}>{reg.phone}</div>
                         </div>
                         <div className="admin-table-cell" style={{ fontSize: '0.82rem' }}>{reg.numberOfGuests}</div>
                           <div className="admin-table-cell" style={{ textAlign: 'center', fontSize: '0.78rem' }}>
-                            {reg.event?.isPaidEvent ? <span className={`status-badge ${reg.paymentStatus === 'Paid' ? 'status-active' : reg.paymentStatus === 'Pending' ? 'status-draft' : 'status-inactive'}`}>{reg.paymentStatus || 'Unpaid'}</span> : <span style={{ color: '#15803d', fontWeight: 600 }}>FREE</span>}
+                            {reg.event?.isPaidEvent ? <span className={`status-badge ${reg.paymentStatus === 'Paid' ? 'status-active' : reg.paymentStatus === 'Pending' ? 'status-draft' : 'status-inactive'}`}>{reg.paymentStatus || 'Unpaid'}</span> : <span style={{ color: 'var(--success)', fontWeight: 600 }}>FREE</span>}
                           </div>
                         <div className="admin-table-cell">{statusBadge(reg.status)}</div>
                         <div className="admin-table-cell" style={{ fontSize: '0.78rem', whiteSpace: 'nowrap' }}>{new Date(reg.createdAt).toLocaleDateString('en-IN')}</div>
@@ -167,7 +167,7 @@ const EventRegistrations = () => {
                             Reject
                           </button>
                         )}
-                        {reg.status !== 'Pending' && reg.status !== 'Confirmed' && <span style={{ fontSize: '0.76rem', color: '#94a3b8' }}>No actions</span>}
+                        {reg.status !== 'Pending' && reg.status !== 'Confirmed' && <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>No actions</span>}
                       </div>
                     </div>
                   ))}

@@ -10,7 +10,7 @@ const formatDate = (d) => {
 
 const renderStars = (rating, size = '0.85rem') => {
   return Array.from({ length: 5 }, (_, i) => (
-    <span key={i} style={{ color: i < rating ? '#f59e0b' : '#e2e8f0', fontSize: size }} aria-hidden="true">★</span>
+    <span key={i} style={{ color: i < rating ? 'var(--accent)' : 'var(--border)', fontSize: size }} aria-hidden="true">★</span>
   ));
 };
 
@@ -64,11 +64,11 @@ const EventReviews = ({ eventId, isAuthenticated, user, userRole }) => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       {/* Summary */}
       {summary && summary.totalReviews > 0 && (
-        <div style={{ display: 'flex', gap: '24px', alignItems: 'center', flexWrap: 'wrap', padding: '14px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #f1f5f9' }}>
+        <div style={{ display: 'flex', gap: '24px', alignItems: 'center', flexWrap: 'wrap', padding: '14px', background: 'var(--surface-muted)', borderRadius: '12px', border: '1px solid var(--surface-muted)' }}>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a' }}>{summary.averageRating}</div>
+            <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)' }}>{summary.averageRating}</div>
             <div>{renderStars(Math.round(summary.averageRating))}</div>
-            <div style={{ fontSize: '0.78rem', color: '#64748b' }}>{summary.totalReviews} review{summary.totalReviews !== 1 ? 's' : ''}</div>
+            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{summary.totalReviews} review{summary.totalReviews !== 1 ? 's' : ''}</div>
           </div>
           <div style={{ flex: 1, minWidth: '180px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
             {[5, 4, 3, 2, 1].map(star => {
@@ -76,11 +76,11 @@ const EventReviews = ({ eventId, isAuthenticated, user, userRole }) => {
               const pct = summary.totalReviews > 0 ? (count / summary.totalReviews) * 100 : 0;
               return (
                 <div key={star} style={{ display: 'grid', gridTemplateColumns: '28px 1fr 30px', gap: '8px', alignItems: 'center', fontSize: '0.78rem' }}>
-                  <span style={{ color: '#64748b' }}>{star} ★</span>
-                  <div style={{ height: '6px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}>
-                    <div style={{ width: `${pct}%`, height: '100%', background: '#f59e0b', borderRadius: '999px' }} />
+                  <span style={{ color: 'var(--text-muted)' }}>{star} ★</span>
+                  <div style={{ height: '6px', background: 'var(--border)', borderRadius: '999px', overflow: 'hidden' }}>
+                    <div style={{ width: `${pct}%`, height: '100%', background: 'var(--accent)', borderRadius: '999px' }} />
                   </div>
-                  <span style={{ color: '#64748b', textAlign: 'right' }}>{count}</span>
+                  <span style={{ color: 'var(--text-muted)', textAlign: 'right' }}>{count}</span>
                 </div>
               );
             })}
@@ -97,13 +97,13 @@ const EventReviews = ({ eventId, isAuthenticated, user, userRole }) => {
         )
       )}
       {!isAuthenticated && (
-        <p style={{ fontSize: '0.82rem', color: '#94a3b8', fontStyle: 'italic' }}>Login to write a review after attending this event.</p>
+        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>Login to write a review after attending this event.</p>
       )}
 
       {/* My existing review */}
       {myReview && (
-        <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '12px', padding: '14px' }}>
-          <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#2563eb', marginBottom: '8px' }}>Your Review</div>
+        <div style={{ background: 'var(--brand-subtle)', border: '1px solid var(--border-strong)', borderRadius: '12px', padding: '14px' }}>
+          <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--brand-primary)', marginBottom: '8px' }}>Your Review</div>
           {editingId ? (
             <ReviewForm
               eventId={eventId}
@@ -114,11 +114,11 @@ const EventReviews = ({ eventId, isAuthenticated, user, userRole }) => {
           ) : (
             <>
               <div>{renderStars(myReview.rating)}</div>
-              <p style={{ fontSize: '0.88rem', color: '#334155', marginTop: '6px' }}>{myReview.comment || ''}</p>
-              <div style={{ fontSize: '0.76rem', color: '#94a3b8', marginTop: '4px' }}>{formatDate(myReview.createdAt)}</div>
+              <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginTop: '6px' }}>{myReview.comment || ''}</p>
+              <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '4px' }}>{formatDate(myReview.createdAt)}</div>
               <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
                 <button className="btn-secondary" style={{ fontSize: '0.76rem', padding: '4px 10px' }} onClick={() => { setEditingId(myReview._id); setEditRating(myReview.rating); setEditComment(myReview.comment); }}>Edit</button>
-                <button className="btn-secondary" style={{ fontSize: '0.76rem', padding: '4px 10px', borderColor: '#fecaca', color: '#b91c1c' }} onClick={() => setDeleteTarget(myReview)}>Delete</button>
+                <button className="btn-secondary" style={{ fontSize: '0.76rem', padding: '4px 10px', borderColor: 'var(--danger)', color: 'var(--danger)' }} onClick={() => setDeleteTarget(myReview)}>Delete</button>
               </div>
             </>
           )}
@@ -127,7 +127,7 @@ const EventReviews = ({ eventId, isAuthenticated, user, userRole }) => {
 
       {/* Not eligible message */}
       {isAuthenticated && userRole === 'user' && !myReview && !hasConfirmedReg && !loading && (
-        <p style={{ fontSize: '0.82rem', color: '#94a3b8', fontStyle: 'italic' }}>Reviews are available after confirming this event.</p>
+        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>Reviews are available after confirming this event.</p>
       )}
 
       {/* All reviews list */}
@@ -136,20 +136,20 @@ const EventReviews = ({ eventId, isAuthenticated, user, userRole }) => {
       ) : reviews.length > 0 ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {reviews.filter(r => !myReview || r._id !== myReview._id).map(review => (
-            <div key={review._id} style={{ background: '#ffffff', border: '1px solid #f1f5f9', borderRadius: '12px', padding: '14px' }}>
+            <div key={review._id} style={{ background: 'var(--surface)', border: '1px solid var(--surface-muted)', borderRadius: '12px', padding: '14px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                 <div>
-                  <div style={{ fontWeight: 600, color: '#0f172a', fontSize: '0.88rem' }}>{review.user?.name || 'Anonymous'}</div>
-                  <div style={{ fontSize: '0.74rem', color: '#94a3b8' }}>{formatDate(review.createdAt)}</div>
+                  <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.88rem' }}>{review.user?.name || 'Anonymous'}</div>
+                  <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>{formatDate(review.createdAt)}</div>
                 </div>
                 <div>{renderStars(review.rating)}</div>
               </div>
-              {review.comment && <p style={{ fontSize: '0.86rem', color: '#334155', margin: 0, lineHeight: 1.55 }}>{review.comment}</p>}
+              {review.comment && <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.55 }}>{review.comment}</p>}
             </div>
           ))}
         </div>
       ) : !loading && (!summary || summary.totalReviews === 0) ? (
-        <p style={{ fontSize: '0.82rem', color: '#94a3b8', fontStyle: 'italic' }}>No reviews yet. Be the first to review!</p>
+        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>No reviews yet. Be the first to review!</p>
       ) : null}
 
       <ConfirmModal
@@ -193,11 +193,11 @@ const ReviewForm = ({ eventId, initialData, onSubmitted, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+    <form onSubmit={handleSubmit} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
       <label className="form-label" style={{ marginBottom: 0 }}>Rating</label>
       <div style={{ display: 'flex', gap: '4px' }}>
         {[1, 2, 3, 4, 5].map(star => (
-          <button key={star} type="button" onClick={() => setRating(star)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.4rem', color: star <= rating ? '#f59e0b' : '#e2e8f0', padding: 0, transition: 'color 0.15s ease' }} aria-label={`Rate ${star} star${star !== 1 ? 's' : ''}`}>★</button>
+          <button key={star} type="button" onClick={() => setRating(star)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.4rem', color: star <= rating ? 'var(--accent)' : 'var(--border)', padding: 0, transition: 'color 0.15s ease' }} aria-label={`Rate ${star} star${star !== 1 ? 's' : ''}`}>★</button>
         ))}
       </div>
       <textarea
@@ -209,7 +209,7 @@ const ReviewForm = ({ eventId, initialData, onSubmitted, onCancel }) => {
         maxLength={1000}
       />
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>{comment.length} / 1000</span>
+        <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>{comment.length} / 1000</span>
         <div style={{ display: 'flex', gap: '8px' }}>
           <button type="button" className="btn-secondary" style={{ fontSize: '0.8rem', padding: '5px 12px' }} onClick={onCancel}>Cancel</button>
           <button type="submit" className="btn-primary" disabled={submitting} style={{ fontSize: '0.8rem', padding: '5px 14px' }}>

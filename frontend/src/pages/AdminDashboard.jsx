@@ -690,16 +690,16 @@ const AdminDashboard = () => {
                     return (
                       <div className="analytics-source">
                         <div className="analytics-source-row">
-                          <span className="analytics-source-label"><span className="analytics-dot" style={{ background: '#2563eb' }} aria-hidden="true"></span> Central Government</span>
+                          <span className="analytics-source-label"><span className="analytics-dot" style={{ background: 'var(--brand-primary)' }} aria-hidden="true"></span> Central Government</span>
                           <span className="analytics-source-value">{overview.centralSchemes} · {centralPct}%</span>
                         </div>
                         <div className="analytics-source-row">
-                          <span className="analytics-source-label"><span className="analytics-dot" style={{ background: '#0d9488' }} aria-hidden="true"></span> State Government</span>
+                          <span className="analytics-source-label"><span className="analytics-dot" style={{ background: 'var(--info)' }} aria-hidden="true"></span> State Government</span>
                           <span className="analytics-source-value">{overview.stateSchemes} · {statePct}%</span>
                         </div>
                         <div className="analytics-bar-track" role="progressbar" aria-valuenow={centralPct} aria-valuemin={0} aria-valuemax={100} aria-label={`Central ${centralPct}% State ${statePct}%`}>
-                          <div className="analytics-bar-fill" style={{ width: `${centralPct}%`, background: '#2563eb' }}></div>
-                          <div className="analytics-bar-fill" style={{ width: `${statePct}%`, background: '#0d9488' }}></div>
+                          <div className="analytics-bar-fill" style={{ width: `${centralPct}%`, background: 'var(--brand-primary)' }}></div>
+                          <div className="analytics-bar-fill" style={{ width: `${statePct}%`, background: 'var(--info)' }}></div>
                         </div>
                         <div className="analytics-count">Total {total} schemes</div>
                       </div>
@@ -719,9 +719,9 @@ const AdminDashboard = () => {
                       return <div className="analytics-empty">No scheme status data available.</div>;
                     }
                     const statuses = [
-                      { label: 'Active', value: overview.activeSchemes, color: '#15803d', bg: '#dcfce7' },
-                      { label: 'Draft', value: overview.draftSchemes, color: '#92400e', bg: '#fef3c7' },
-                      { label: 'Inactive', value: overview.inactiveSchemes, color: '#b91c1c', bg: '#fecaca' }
+                      { label: 'Active', value: overview.activeSchemes, color: 'var(--success)', bg: 'var(--success)' },
+                      { label: 'Draft', value: overview.draftSchemes, color: 'var(--warning)', bg: 'var(--warning-subtle)' },
+                      { label: 'Inactive', value: overview.inactiveSchemes, color: 'var(--danger)', bg: 'var(--danger)' }
                     ];
                     const maxStatus = Math.max(...statuses.map(s => s.value), 1);
                     return (
@@ -765,7 +765,7 @@ const AdminDashboard = () => {
                         <div key={item.category} className="analytics-bar-row">
                           <span className="analytics-bar-label" title={item.category}>{item.category}</span>
                           <div className="analytics-bar-track">
-                            <div className="analytics-bar-fill" style={{ width: `${(item.count / maxCategoryCount) * 100}%`, background: '#2563eb' }}></div>
+                            <div className="analytics-bar-fill" style={{ width: `${(item.count / maxCategoryCount) * 100}%`, background: 'var(--brand-primary)' }}></div>
                           </div>
                           <span className="analytics-count">{item.count}</span>
                         </div>
@@ -852,7 +852,7 @@ const AdminDashboard = () => {
                           <div className="admin-table-body">
                             {overview.recentSchemes.slice(0, 5).map((s) => (
                               <div key={s._id} className="admin-table-row" style={{ gridTemplateColumns: '1.6fr 0.9fr 0.7fr 0.7fr 0.7fr 0.9fr' }}>
-                                <div className="admin-table-cell" style={{ fontWeight: 600, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={s.title}>
+                                <div className="admin-table-cell" style={{ fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={s.title}>
                                   <Link to={`/schemes/${s._id}`} className="link-inline">{s.title}</Link>
                                 </div>
                                 <div className="admin-table-cell"><span className="category-badge">{s.category}</span></div>
@@ -889,7 +889,7 @@ const AdminDashboard = () => {
                           <div className="admin-table-body">
                             {overview.recentUpdated.slice(0, 5).map((s) => (
                               <div key={s._id} className="admin-table-row" style={{ display: 'grid', gridTemplateColumns: '1.6fr 0.9fr 0.7fr 0.9fr', padding: '10px 14px' }}>
-                                <div className="admin-table-cell" style={{ fontWeight: 600, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={s.title}>
+                                <div className="admin-table-cell" style={{ fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={s.title}>
                                   <Link to={`/schemes/${s._id}`} className="link-inline">{s.title}</Link>
                                 </div>
                                 <div className="admin-table-cell"><span className="category-badge">{s.category}</span></div>
@@ -943,8 +943,8 @@ const AdminDashboard = () => {
       {active === 'schemes' && (
         <>
           <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-            <button className={`btn-secondary ${adminEventView === 'schemes' ? 'btn-primary' : ''}`} onClick={() => setAdminEventView('schemes')} style={adminEventView === 'schemes' ? {} : { background: '#ffffff', borderColor: '#e2e8f0' }}>Schemes</button>
-                  <button className={`btn-secondary ${adminEventView === 'events' ? 'btn-primary' : ''}`} onClick={() => { setAdminEventView('events'); fetchAdminEvents(1); fetchPendingEventsCount(); setAdminEventsPage(1); }} style={adminEventView === 'events' ? {} : { background: '#ffffff', borderColor: '#e2e8f0' }}>Events{pendingEventsCount > 0 ? ` (${pendingEventsCount})` : ''}</button>
+            <button className={`btn-secondary ${adminEventView === 'schemes' ? 'btn-primary' : ''}`} onClick={() => setAdminEventView('schemes')} style={adminEventView === 'schemes' ? {} : { background: 'var(--surface)', borderColor: 'var(--border)' }}>Schemes</button>
+                  <button className={`btn-secondary ${adminEventView === 'events' ? 'btn-primary' : ''}`} onClick={() => { setAdminEventView('events'); fetchAdminEvents(1); fetchPendingEventsCount(); setAdminEventsPage(1); }} style={adminEventView === 'events' ? {} : { background: 'var(--surface)', borderColor: 'var(--border)' }}>Events{pendingEventsCount > 0 ? ` (${pendingEventsCount})` : ''}</button>
           </div>
 
           {adminEventView === 'schemes' ? (
@@ -1057,7 +1057,7 @@ const AdminDashboard = () => {
                             <div className="admin-table-cell">{statusBadge(s.status)}</div>
                             <div className="admin-table-cell" style={{ fontSize: '0.82rem', whiteSpace: 'nowrap' }}>{s.formattedCreatedAt || (s.createdAt ? new Date(s.createdAt).toLocaleDateString('en-IN') : '—')}</div>
                             <div className="admin-table-cell admin-table-actions">
-                              <button className="btn-icon" onClick={() => handleViewScheme(s)} title="View scheme details" aria-label={`View details of ${s.title}`} style={{ color: '#1d4ed8', borderColor: '#bfdbfe' }}>👁</button>
+                              <button className="btn-icon" onClick={() => handleViewScheme(s)} title="View scheme details" aria-label={`View details of ${s.title}`} style={{ color: 'var(--brand-hover)', borderColor: 'var(--border-strong)' }}>👁</button>
                               <button className="btn-icon btn-edit" onClick={() => handleEditScheme(s)} title="Edit scheme">✏</button>
                               <button className="btn-icon btn-delete" onClick={() => handleDeleteClick(s)} title="Delete scheme">🗑</button>
                             </div>
@@ -1116,7 +1116,7 @@ const AdminDashboard = () => {
 
                 {pendingEventsCount > 0 && (
                   <div style={{ marginBottom: '14px' }}>
-                    <button type="button" className="btn-secondary" onClick={() => { setAdminEventStatus('Pending'); setAdminEventsPage(1); }} style={{ borderColor: '#fde68a', background: '#fffbeb', color: '#92400e', fontWeight: 700 }}>
+                    <button type="button" className="btn-secondary" onClick={() => { setAdminEventStatus('Pending'); setAdminEventsPage(1); }} style={{ borderColor: 'var(--warning)', background: 'var(--warning-subtle)', color: 'var(--warning)', fontWeight: 700 }}>
                       ⏳ Pending Events: {pendingEventsCount} {adminEventStatus === 'Pending' ? '(showing)' : '— click to review'}
                     </button>
                   </div>
@@ -1153,10 +1153,10 @@ const AdminDashboard = () => {
                       <div className="admin-table-body">
                         {adminEvents.map((ev) => (
                             <div key={ev._id} className="admin-table-row" style={{ display: 'grid', gridTemplateColumns: '1.6fr 0.7fr 1fr 0.8fr 0.9fr 0.7fr 0.7fr 0.7fr 0.8fr 0.9fr 0.5fr 0.7fr 240px', padding: '10px 14px', alignItems: 'center' }}>
-                             <div className="admin-table-cell" style={{ fontWeight: 600, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={ev.title}>
+                             <div className="admin-table-cell" style={{ fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={ev.title}>
                                <Link to={`/events/${ev._id}`} className="link-inline">{ev.title}</Link>
                              </div>
-                             <div className="admin-table-cell" style={{ fontSize: '0.74rem', color: '#64748b', fontFamily: 'monospace' }} title={ev._id}>#{String(ev._id).slice(-6)}</div>
+                             <div className="admin-table-cell" style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontFamily: 'monospace' }} title={ev._id}>#{String(ev._id).slice(-6)}</div>
                              <div className="admin-table-cell" style={{ fontSize: '0.82rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={ev.organizer?.name || ev.organizer?.email || String(ev.organizer)}>{ev.organizer?.name || ev.organizer?.organizationName || (ev.organizer ? String(ev.organizer).slice(-6) : '—')}</div>
                              <div className="admin-table-cell" style={{ fontSize: '0.82rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={ev.department}>{ev.department || '—'}</div>
                              <div className="admin-table-cell" style={{ fontSize: '0.82rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={ev.schemeId?.title || ''}>{ev.schemeId?.title || '—'}</div>
@@ -1205,11 +1205,11 @@ const AdminDashboard = () => {
             <div className="modal-header">
               <div style={{ display: 'flex', gap: '12px', alignItems: 'center', minWidth: 0 }}>
                 {viewingScheme?.imageUrl && (
-                  <img src={viewingScheme.imageUrl} alt={viewingScheme.title} className="scheme-thumb-img" style={{ width: '52px', height: '52px', borderRadius: '12px', objectFit: 'cover', border: '1px solid #e2e8f0', flexShrink: 0 }} />
+                  <img src={viewingScheme.imageUrl} alt={viewingScheme.title} className="scheme-thumb-img" style={{ width: '52px', height: '52px', borderRadius: '12px', objectFit: 'cover', border: '1px solid var(--border)', flexShrink: 0 }} />
                 )}
                 <div style={{ minWidth: 0 }}>
                   <h3 className="modal-title" title={viewingScheme?.title}>{viewingScheme?.title || 'Scheme details'}</h3>
-                  <p className="modal-subtitle" style={{ fontSize: '0.82rem', color: '#64748b', marginTop: '4px' }}>
+                  <p className="modal-subtitle" style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '4px' }}>
                     {viewingScheme?.category || '—'}{viewingScheme?.sourceType ? ` · ${viewingScheme.sourceType === 'CENTRAL' ? 'Central' : 'State'}` : ''}{viewingScheme?.sourceType === 'STATE' && viewingScheme?.state ? ` · ${viewingScheme.state}` : ''}
                   </p>
                 </div>
@@ -1230,15 +1230,15 @@ const AdminDashboard = () => {
                     {viewingScheme.sourceType === 'CENTRAL'
                       ? <span className="source-badge source-central">Central</span>
                       : <span className="source-badge source-state">State{viewingScheme.state ? ` · ${viewingScheme.state}` : ''}</span>}
-                    <span className="admin-muted" style={{ fontSize: '0.78rem' }}>Apply count: <strong style={{ color: '#0f172a' }}>{viewingScheme.applyCount ?? 0}</strong></span>
+                    <span className="admin-muted" style={{ fontSize: '0.78rem' }}>Apply count: <strong style={{ color: 'var(--text-primary)' }}>{viewingScheme.applyCount ?? 0}</strong></span>
                   </div>
                   <div>
                     <div className="form-section-title" style={{ marginBottom: '6px' }}>Description</div>
-                    <p style={{ fontSize: '0.88rem', color: '#334155', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>{viewingScheme.description || '—'}</p>
+                    <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>{viewingScheme.description || '—'}</p>
                   </div>
                   <div>
                     <div className="form-section-title" style={{ marginBottom: '6px' }}>Eligibility</div>
-                    <p style={{ fontSize: '0.88rem', color: '#334155', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>{viewingScheme.eligibility || '—'}</p>
+                    <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>{viewingScheme.eligibility || '—'}</p>
                     {Array.isArray(viewingScheme.eligibilityTags) && viewingScheme.eligibilityTags.length > 0 && (
                       <div className="admin-chips" style={{ marginTop: '8px' }}>
                         {viewingScheme.eligibilityTags.map((t) => <span key={t} className="eligibility-tag">{t}</span>)}
@@ -1258,7 +1258,7 @@ const AdminDashboard = () => {
                   </div>
                   <div>
                     <div className="form-section-title" style={{ marginBottom: '6px' }}>Benefits</div>
-                    <p style={{ fontSize: '0.88rem', color: '#334155', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>{viewingScheme.benefits || '—'}</p>
+                    <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>{viewingScheme.benefits || '—'}</p>
                   </div>
                   <div>
                     <div className="form-section-title" style={{ marginBottom: '6px' }}>Documents required ({Array.isArray(viewingScheme.documentsRequired) ? viewingScheme.documentsRequired.length : 0})</div>
@@ -1269,16 +1269,16 @@ const AdminDashboard = () => {
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px', fontSize: '0.86rem' }}>
                     <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Official URL</div>{viewingScheme.officialURL ? <a href={viewingScheme.officialURL} target="_blank" rel="noopener noreferrer" className="link-inline" style={{ wordBreak: 'break-all' }}>{viewingScheme.officialURL}</a> : <span className="admin-muted">—</span>}</div>
                     <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Image URL</div>{viewingScheme.imageUrl ? <a href={viewingScheme.imageUrl} target="_blank" rel="noopener noreferrer" className="link-inline" style={{ wordBreak: 'break-all' }}>View image</a> : <span className="admin-muted">—</span>}</div>
-                    <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Application End Date</div><div style={{ color: '#0f172a' }}>{viewingScheme.endDate && !isNaN(new Date(viewingScheme.endDate).getTime()) ? new Date(viewingScheme.endDate).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) : 'No end date'}</div></div>
-                    <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Created</div><div style={{ color: '#0f172a' }}>{viewingScheme.formattedCreatedAt || (viewingScheme.createdAt ? new Date(viewingScheme.createdAt).toLocaleDateString('en-IN') : '—')}</div></div>
-                    <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Last updated</div><div style={{ color: '#0f172a' }}>{viewingScheme.formattedUpdatedAt || (viewingScheme.updatedAt ? new Date(viewingScheme.updatedAt).toLocaleDateString('en-IN') : '—')}</div></div>
-                    <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Created by</div><div style={{ color: '#0f172a' }}>{viewingScheme.createdBy?.name ? `${viewingScheme.createdBy.name} (${viewingScheme.createdBy.email || viewingScheme.createdBy.role || ''})` : '—'}</div></div>
-                    <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Scheme ID</div><div style={{ color: '#475569', fontFamily: 'ui-monospace, monospace', fontSize: '0.78rem', wordBreak: 'break-all' }}>{viewingScheme._id}</div></div>
+                    <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Application End Date</div><div style={{ color: 'var(--text-primary)' }}>{viewingScheme.endDate && !isNaN(new Date(viewingScheme.endDate).getTime()) ? new Date(viewingScheme.endDate).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }) : 'No end date'}</div></div>
+                    <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Created</div><div style={{ color: 'var(--text-primary)' }}>{viewingScheme.formattedCreatedAt || (viewingScheme.createdAt ? new Date(viewingScheme.createdAt).toLocaleDateString('en-IN') : '—')}</div></div>
+                    <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Last updated</div><div style={{ color: 'var(--text-primary)' }}>{viewingScheme.formattedUpdatedAt || (viewingScheme.updatedAt ? new Date(viewingScheme.updatedAt).toLocaleDateString('en-IN') : '—')}</div></div>
+                    <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Created by</div><div style={{ color: 'var(--text-primary)' }}>{viewingScheme.createdBy?.name ? `${viewingScheme.createdBy.name} (${viewingScheme.createdBy.email || viewingScheme.createdBy.role || ''})` : '—'}</div></div>
+                    <div><div className="admin-muted" style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Scheme ID</div><div style={{ color: 'var(--text-secondary)', fontFamily: 'ui-monospace, monospace', fontSize: '0.78rem', wordBreak: 'break-all' }}>{viewingScheme._id}</div></div>
                   </div>
                 </>
               )}
             </div>
-            <div className="modal-footer" style={{ justifyContent: 'flex-end', background: '#f8fafc', borderTop: '1px solid #e2e8f0' }}>
+            <div className="modal-footer" style={{ justifyContent: 'flex-end', background: 'var(--surface-muted)', borderTop: '1px solid var(--border)' }}>
               <Link to={viewingScheme ? `/schemes/${viewingScheme._id}` : '/schemes'} className="btn-secondary" style={{ textDecoration: 'none' }}>Open Public Page</Link>
               <button type="button" className="btn-primary" onClick={() => { setIsViewSchemeOpen(false); setViewingScheme(null); setViewSchemeError(null); }}>Done</button>
             </div>
@@ -1301,7 +1301,7 @@ const AdminDashboard = () => {
             <div className="modal-header">
               <div>
                 <h3 className="modal-title">Import Result</h3>
-                <p className="modal-subtitle" style={{ fontSize: '0.82rem', color: '#64748b', marginTop: '4px' }}>Bulk government scheme import completed</p>
+                <p className="modal-subtitle" style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '4px' }}>Bulk government scheme import completed</p>
               </div>
               <button className="modal-close" onClick={() => { setIsResultOpen(false); setImportResult(null); }} aria-label="Close">×</button>
             </div>
@@ -1309,33 +1309,33 @@ const AdminDashboard = () => {
             <div className="modal-body" style={{ overflowY: 'auto', padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
               {/* Stats grid */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px' }}>
-                <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#64748b', marginBottom: '6px' }}>Total received</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', lineHeight: 1 }}>{importResult.totalReceived ?? 0}</div>
+                <div style={{ background: 'var(--surface-muted)', border: '1px solid var(--border)', borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '6px' }}>Total received</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1 }}>{importResult.totalReceived ?? 0}</div>
                 </div>
-                <div style={{ background: '#f0fdf4', border: '1px solid #dcfce7', borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#15803d', marginBottom: '6px' }}>Successfully inserted</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#15803d', lineHeight: 1 }}>{importResult.inserted ?? 0}</div>
+                <div style={{ background: 'var(--success-subtle)', border: '1px solid var(--success)', borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--success)', marginBottom: '6px' }}>Successfully inserted</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--success)', lineHeight: 1 }}>{importResult.inserted ?? 0}</div>
                 </div>
-                <div style={{ background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#92400e', marginBottom: '6px' }}>Duplicates skipped</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#92400e', lineHeight: 1 }}>{importResult.skippedDuplicates ?? 0}</div>
+                <div style={{ background: 'var(--warning-subtle)', border: '1px solid var(--warning)', borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--warning)', marginBottom: '6px' }}>Duplicates skipped</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--warning)', lineHeight: 1 }}>{importResult.skippedDuplicates ?? 0}</div>
                 </div>
-                <div style={{ background: importResult.failed > 0 ? '#fef2f2' : '#f8fafc', border: `1px solid ${importResult.failed > 0 ? '#fecaca' : '#e2e8f0'}`, borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: importResult.failed > 0 ? '#b91c1c' : '#64748b', marginBottom: '6px' }}>Failed</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: importResult.failed > 0 ? '#b91c1c' : '#0f172a', lineHeight: 1 }}>{importResult.failed ?? 0}</div>
+                <div style={{ background: importResult.failed > 0 ? 'var(--danger-subtle)' : 'var(--surface-muted)', border: `1px solid ${importResult.failed > 0 ? 'var(--danger)' : 'var(--border)'}`, borderRadius: '12px', padding: '14px', textAlign: 'center' }}>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: importResult.failed > 0 ? 'var(--danger)' : 'var(--text-muted)', marginBottom: '6px' }}>Failed</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: importResult.failed > 0 ? 'var(--danger)' : 'var(--text-primary)', lineHeight: 1 }}>{importResult.failed ?? 0}</div>
                 </div>
               </div>
 
               {/* Duplicates section */}
-              <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden' }}>
+              <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', overflow: 'hidden' }}>
                 <button
                   type="button"
                   onClick={() => setShowDuplicates((v) => !v)}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: '#ffffff', border: 'none', borderBottom: showDuplicates ? '1px solid #f1f5f9' : 'none', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem', color: '#0f172a' }}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: 'var(--surface)', border: 'none', borderBottom: showDuplicates ? '1px solid var(--border-light)' : 'none', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)' }}
                 >
                   <span>Duplicates {importResult.duplicates?.length ? `(${importResult.duplicates.length})` : ''}</span>
-                  <span style={{ fontSize: '0.8rem', color: '#64748b', transform: showDuplicates ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.15s ease' }}>▾</span>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', transform: showDuplicates ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.15s ease' }}>▾</span>
                 </button>
                 {showDuplicates && (
                   <div style={{ padding: '12px', maxHeight: '220px', overflowY: 'auto' }}>
@@ -1349,34 +1349,34 @@ const AdminDashboard = () => {
                         <div className="admin-table-body">
                           {importResult.duplicates.map((d, idx) => (
                             <div key={`${d.title}-${idx}`} className="admin-table-row" style={{ display: 'grid', gridTemplateColumns: '1.4fr 0.9fr 1.2fr', padding: '10px 12px' }}>
-                              <div className="admin-table-cell" style={{ fontWeight: 600, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={d.title}>{d.title || '—'}</div>
+                              <div className="admin-table-cell" style={{ fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={d.title}>{d.title || '—'}</div>
                               <div className="admin-table-cell"><span className="category-badge">{d.category || '—'}</span></div>
-                              <div className="admin-table-cell" style={{ fontSize: '0.82rem', color: '#92400e' }}>{d.reason || 'Duplicate'}</div>
+                              <div className="admin-table-cell" style={{ fontSize: '0.82rem', color: 'var(--warning)' }}>{d.reason || 'Duplicate'}</div>
                             </div>
                           ))}
                         </div>
                       </div>
                     ) : (
-                      <div style={{ textAlign: 'center', padding: '16px', color: '#64748b', fontSize: '0.88rem', background: '#f8fafc', borderRadius: '8px', border: '1px dashed #e2e8f0' }}>No duplicates found</div>
+                      <div style={{ textAlign: 'center', padding: '16px', color: 'var(--text-muted)', fontSize: '0.88rem', background: 'var(--surface-muted)', borderRadius: '8px', border: '1px dashed var(--border)' }}>No duplicates found</div>
                     )}
                   </div>
                 )}
                 {!showDuplicates && (
-                  <div style={{ padding: '10px 16px', fontSize: '0.82rem', color: '#64748b', background: '#fbfdff', borderTop: '1px solid #f1f5f9' }}>
+                  <div style={{ padding: '10px 16px', fontSize: '0.82rem', color: 'var(--text-muted)', background: 'var(--surface)', borderTop: '1px solid var(--border-light)' }}>
                     {Array.isArray(importResult.duplicates) && importResult.duplicates.length > 0 ? `${importResult.duplicates.length} duplicate(s) — expand to view` : 'No duplicates found'}
                   </div>
                 )}
               </div>
 
               {/* Failed section */}
-              <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden' }}>
+              <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '12px', overflow: 'hidden' }}>
                 <button
                   type="button"
                   onClick={() => setShowFailed((v) => !v)}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: '#ffffff', border: 'none', borderBottom: showFailed ? '1px solid #f1f5f9' : 'none', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem', color: '#0f172a' }}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: 'var(--surface)', border: 'none', borderBottom: showFailed ? '1px solid var(--border-light)' : 'none', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)' }}
                 >
                   <span>Failed Imports {importResult.errors?.length ? `(${importResult.errors.length})` : ''}</span>
-                  <span style={{ fontSize: '0.8rem', color: '#64748b', transform: showFailed ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.15s ease' }}>▾</span>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', transform: showFailed ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.15s ease' }}>▾</span>
                 </button>
                 {showFailed && (
                   <div style={{ padding: '12px', maxHeight: '220px', overflowY: 'auto' }}>
@@ -1391,28 +1391,28 @@ const AdminDashboard = () => {
                         <div className="admin-table-body">
                           {importResult.errors.map((e, idx) => (
                             <div key={`${e.title}-${idx}`} className="admin-table-row" style={{ display: 'grid', gridTemplateColumns: '0.4fr 1.2fr 0.8fr 1.6fr', padding: '10px 12px' }}>
-                              <div className="admin-table-cell" style={{ color: '#64748b', fontWeight: 600 }}>{e.index ?? idx}</div>
-                              <div className="admin-table-cell" style={{ fontWeight: 600, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={e.title}>{e.title || '—'}</div>
+                              <div className="admin-table-cell" style={{ color: 'var(--text-muted)', fontWeight: 600 }}>{e.index ?? idx}</div>
+                              <div className="admin-table-cell" style={{ fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={e.title}>{e.title || '—'}</div>
                               <div className="admin-table-cell"><span className="category-badge">{e.category || '—'}</span></div>
-                              <div className="admin-table-cell" style={{ fontSize: '0.82rem', color: '#b91c1c', whiteSpace: 'normal', wordBreak: 'break-word' }}>{e.message || JSON.stringify(e.errors || {})}</div>
+                              <div className="admin-table-cell" style={{ fontSize: '0.82rem', color: 'var(--danger)', whiteSpace: 'normal', wordBreak: 'break-word' }}>{e.message || JSON.stringify(e.errors || {})}</div>
                             </div>
                           ))}
                         </div>
                       </div>
                     ) : (
-                      <div style={{ textAlign: 'center', padding: '16px', color: '#64748b', fontSize: '0.88rem', background: '#f8fafc', borderRadius: '8px', border: '1px dashed #e2e8f0' }}>No failed imports</div>
+                      <div style={{ textAlign: 'center', padding: '16px', color: 'var(--text-muted)', fontSize: '0.88rem', background: 'var(--surface-muted)', borderRadius: '8px', border: '1px dashed var(--border)' }}>No failed imports</div>
                     )}
                   </div>
                 )}
                 {!showFailed && (
-                  <div style={{ padding: '10px 16px', fontSize: '0.82rem', color: '#64748b', background: '#fbfdff', borderTop: '1px solid #f1f5f9' }}>
+                  <div style={{ padding: '10px 16px', fontSize: '0.82rem', color: 'var(--text-muted)', background: 'var(--surface)', borderTop: '1px solid var(--border-light)' }}>
                     {Array.isArray(importResult.errors) && importResult.errors.length > 0 ? `${importResult.errors.length} failed — expand to view` : 'No failed imports'}
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="modal-footer" style={{ justifyContent: 'flex-end', background: '#f8fafc', borderTop: '1px solid #e2e8f0' }}>
+            <div className="modal-footer" style={{ justifyContent: 'flex-end', background: 'var(--surface-muted)', borderTop: '1px solid var(--border)' }}>
               <button type="button" className="btn-primary" onClick={() => { setIsResultOpen(false); setImportResult(null); }}>
                 Done
               </button>

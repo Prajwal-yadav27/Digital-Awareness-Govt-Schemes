@@ -1,4 +1,5 @@
 import '../styles/admin.css';
+import '../styles/admin-premium.css';
 
 const AdminLayout = ({ sidebar, topbar, children, collapsed = false }) => {
   return (

@@ -114,7 +114,7 @@ const BulkSchemeImport = ({ isOpen, onClose, onImport }) => {
         <div className="modal-header" style={{ flexShrink: 0 }}>
           <div>
             <h3 className="modal-title">Import Government Schemes</h3>
-            <p className="modal-subtitle" style={{ fontSize: '0.82rem', color: '#64748b', marginTop: '4px' }}>
+            <p className="modal-subtitle" style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '4px' }}>
               Select a JSON file containing an array of schemes
             </p>
           </div>
@@ -131,10 +131,10 @@ const BulkSchemeImport = ({ isOpen, onClose, onImport }) => {
             </label>
             <div
               style={{
-                border: '1.5px dashed #cbd5e1',
+                border: '1.5px dashed var(--border-strong)',
                 borderRadius: '12px',
                 padding: '18px',
-                background: '#f8fafc',
+                background: 'var(--surface-muted)',
                 textAlign: 'center',
                 transition: 'all 0.15s ease'
               }}
@@ -149,10 +149,10 @@ const BulkSchemeImport = ({ isOpen, onClose, onImport }) => {
                   display: 'block',
                   width: '100%',
                   fontSize: '0.88rem',
-                  color: '#334155'
+                  color: 'var(--text-secondary)'
                 }}
               />
-              <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '8px' }}>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '8px' }}>
                 Accepts only <strong>.json</strong> files. File is parsed locally; nothing is uploaded yet.
               </div>
             </div>
@@ -178,49 +178,49 @@ const BulkSchemeImport = ({ isOpen, onClose, onImport }) => {
               >
                 <div
                   style={{
-                    background: '#f8fafc',
-                    border: '1px solid #e2e8f0',
+                    background: 'var(--surface-muted)',
+                    border: '1px solid var(--border)',
                     borderRadius: '12px',
                     padding: '14px'
                   }}
                 >
-                  <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#64748b', marginBottom: '6px' }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '6px' }}>
                     File Name
                   </div>
-                  <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#0f172a', wordBreak: 'break-all' }}>{fileName}</div>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-primary)', wordBreak: 'break-all' }}>{fileName}</div>
                 </div>
                 <div
                   style={{
-                    background: '#eff6ff',
-                    border: '1px solid #dbeafe',
+                    background: 'var(--brand-subtle)',
+                    border: '1px solid var(--brand-subtle)',
                     borderRadius: '12px',
                     padding: '14px',
                     textAlign: 'center'
                   }}
                 >
-                  <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#2563eb', marginBottom: '6px' }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--brand-primary)', marginBottom: '6px' }}>
                     Total Schemes
                   </div>
-                  <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#1d4ed8', lineHeight: 1 }}>{parsedSchemes.length}</div>
+                  <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--brand-hover)', lineHeight: 1 }}>{parsedSchemes.length}</div>
                 </div>
                 <div
                   style={{
-                    background: '#f0fdf4',
-                    border: '1px solid #dcfce7',
+                    background: 'var(--success-subtle)',
+                    border: '1px solid var(--success)',
                     borderRadius: '12px',
                     padding: '14px'
                   }}
                 >
-                  <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#15803d', marginBottom: '6px' }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--success)', marginBottom: '6px' }}>
                     Categories
                   </div>
-                  <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#15803d', lineHeight: 1 }}>{Object.keys(categorySummary).length}</div>
+                  <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--success)', lineHeight: 1 }}>{Object.keys(categorySummary).length}</div>
                 </div>
               </div>
 
               {/* Category Summary */}
               <div style={{ marginBottom: '16px' }}>
-                <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#0f172a', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>
+                <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>
                   Category Summary
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -228,9 +228,9 @@ const BulkSchemeImport = ({ isOpen, onClose, onImport }) => {
                     <span
                       key={cat}
                       className="category-badge"
-                      style={{ background: '#f1f5f9', borderColor: '#e2e8f0', color: '#334155' }}
+                      style={{ background: 'var(--surface-muted)', borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
                     >
-                      {cat} <strong style={{ marginLeft: '6px', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '999px', padding: '1px 6px', fontSize: '0.7rem' }}>{count}</strong>
+                      {cat} <strong style={{ marginLeft: '6px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '999px', padding: '1px 6px', fontSize: '0.7rem' }}>{count}</strong>
                     </span>
                   ))}
                 </div>
@@ -239,15 +239,15 @@ const BulkSchemeImport = ({ isOpen, onClose, onImport }) => {
               {/* Preview Table */}
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '8px', flexWrap: 'wrap' }}>
-                  <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#0f172a', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Preview {parsedSchemes.length > perPage ? `— Page ${page} of ${totalPages}` : ''}
                   </div>
-                  <div style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
                     Showing {paginatedSchemes.length} of {parsedSchemes.length} schemes
                   </div>
                 </div>
 
-                <div className="admin-table-scroll" style={{ border: '1px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden', maxHeight: '360px', overflowY: 'auto' }}>
+                <div className="admin-table-scroll" style={{ border: '1px solid var(--border)', borderRadius: '12px', overflow: 'hidden', maxHeight: '360px', overflowY: 'auto' }}>
                   <div className="admin-table" style={{ minWidth: '640px' }}>
                     <div
                       className="admin-table-head"
@@ -275,11 +275,11 @@ const BulkSchemeImport = ({ isOpen, onClose, onImport }) => {
                             style={{
                               display: 'grid',
                               gridTemplateColumns: '1.6fr 0.9fr 0.8fr 0.8fr 0.7fr',
-                              background: globalIdx % 2 === 0 ? '#ffffff' : '#f8fafc'
+                              background: globalIdx % 2 === 0 ? 'var(--surface)' : 'var(--surface-muted)'
                             }}
                           >
-                            <div className="admin-table-cell" style={{ fontWeight: 600, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={s.title}>
-                              {s.title || <span style={{ color: '#94a3b8', fontStyle: 'italic' }}>Untitled</span>}
+                            <div className="admin-table-cell" style={{ fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={s.title}>
+                              {s.title || <span style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>Untitled</span>}
                             </div>
                             <div className="admin-table-cell">
                               <span className="category-badge">{s.category || '—'}</span>
@@ -291,7 +291,7 @@ const BulkSchemeImport = ({ isOpen, onClose, onImport }) => {
                                 <span className="source-badge source-central">Central Govt</span>
                               )}
                             </div>
-                            <div className="admin-table-cell" style={{ fontSize: '0.84rem' }}>{s.state ? s.state : <span style={{ color: '#94a3b8' }}>—</span>}</div>
+                            <div className="admin-table-cell" style={{ fontSize: '0.84rem' }}>{s.state ? s.state : <span style={{ color: 'var(--text-muted)' }}>—</span>}</div>
                             <div className="admin-table-cell">
                               <span className={`status-badge ${s.status === 'Inactive' ? 'status-inactive' : s.status === 'Draft' ? 'status-draft' : 'status-active'}`}>
                                 {s.status || 'Active'}
@@ -316,8 +316,8 @@ const BulkSchemeImport = ({ isOpen, onClose, onImport }) => {
                     >
                       ← Previous
                     </button>
-                    <span style={{ fontSize: '0.82rem', color: '#475569' }}>
-                      Page <strong style={{ color: '#0f172a' }}>{page}</strong> of <strong style={{ color: '#0f172a' }}>{totalPages}</strong>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                      Page <strong style={{ color: 'var(--text-primary)' }}>{page}</strong> of <strong style={{ color: 'var(--text-primary)' }}>{totalPages}</strong>
                     </span>
                     <button
                       type="button"
@@ -337,23 +337,23 @@ const BulkSchemeImport = ({ isOpen, onClose, onImport }) => {
           {!hasValidData && !error && (
             <div
               style={{
-                border: '1px dashed #e2e8f0',
+                border: '1px dashed var(--border)',
                 borderRadius: '12px',
                 padding: '24px',
                 textAlign: 'center',
-                color: '#64748b',
-                background: '#fbfdff',
+                color: 'var(--text-muted)',
+                background: 'var(--surface)',
                 marginTop: '8px'
               }}
             >
               <div style={{ fontSize: '1.4rem', marginBottom: '8px' }}>📄</div>
-              <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#334155' }}>No file loaded</div>
+              <div style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-secondary)' }}>No file loaded</div>
               <div style={{ fontSize: '0.78rem', marginTop: '4px' }}>Select a valid JSON file to see preview and import options.</div>
             </div>
           )}
         </div>
 
-        <div className="modal-footer" style={{ flexShrink: 0, background: '#f8fafc', borderTop: '1px solid #e2e8f0' }}>
+        <div className="modal-footer" style={{ flexShrink: 0, background: 'var(--surface-muted)', borderTop: '1px solid var(--border)' }}>
           <button type="button" className="btn-secondary" onClick={handleClose}>
             Cancel
           </button>

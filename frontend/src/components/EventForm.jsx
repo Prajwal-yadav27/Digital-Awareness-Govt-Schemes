@@ -209,7 +209,7 @@ const EventForm = ({ isOpen, onClose, onSubmit, mode = 'create', initialData = n
         <div className="modal-header">
           <div>
             <h3 className="modal-title">{isEditing ? 'Edit Event' : 'Create Event'}</h3>
-            <p className="modal-subtitle" style={{ fontSize: '0.82rem', color: '#64748b', marginTop: '4px' }}>
+            <p className="modal-subtitle" style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '4px' }}>
               {isEditing ? 'Update event details. Approved events will require re-approval.' : 'Event will be submitted for admin approval.'}
             </p>
           </div>
@@ -330,9 +330,9 @@ const EventForm = ({ isOpen, onClose, onSubmit, mode = 'create', initialData = n
                       }}
                       style={{
                         padding: '4px 10px', borderRadius: '16px', border: '1px solid',
-                        borderColor: selected ? '#2563eb' : '#d1d5db',
-                        background: selected ? '#eff6ff' : '#fff',
-                        color: selected ? '#1d4ed8' : '#374151',
+                        borderColor: selected ? 'var(--brand-primary)' : 'var(--border-strong)',
+                        background: selected ? 'var(--brand-subtle)' : 'var(--surface)',
+                        color: selected ? 'var(--brand-hover)' : 'var(--text-secondary)',
                         fontSize: '0.8rem', cursor: 'pointer'
                       }}
                     >

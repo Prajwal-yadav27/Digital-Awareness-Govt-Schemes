@@ -138,10 +138,6 @@ const AppRoutes = () => {
   return (
     <Router>
       <div className="app-shell">
-        <div className="grid-pattern" aria-hidden="true" />
-        <div className="orb orb-1" aria-hidden="true" />
-        <div className="orb orb-2" aria-hidden="true" />
-        <div className="orb orb-3" aria-hidden="true" />
         <Navbar />
         <main className="app-main">
           <Suspense fallback={<div className="page-wrapper"><Loader message="Loading..." /></div>}>
