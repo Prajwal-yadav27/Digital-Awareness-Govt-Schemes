@@ -123,20 +123,30 @@ const About = () => {
               The people behind the Digital Awareness Platform
             </p>
           </div>
-          <div className="about-team-grid">
-            <article className="about-team-card">
-              <div className="about-team-avatar" aria-label="L Tarun">LT</div>
-              <h3 className="about-team-name">L Tarun</h3>
-            </article>
-            <article className="about-team-card">
-              <div className="about-team-avatar" aria-label="Kavana R J">KR</div>
-              <h3 className="about-team-name">Kavana R J</h3>
-            </article>
-            <article className="about-team-card">
-              <div className="about-team-avatar" aria-label="Prajwal R">PR</div>
-              <h3 className="about-team-name">Prajwal R</h3>
-            </article>
-          </div>
+          
+<div className="about-team-grid">
+  <article className="about-team-card">
+    <div className="about-team-avatar" aria-label="L Tarun">LT</div>
+    <h3 className="about-team-name">L Tarun</h3>
+  </article>
+
+  <article className="about-team-card">
+    <div className="about-team-avatar" aria-label="Kavana R J">KR</div>
+    <h3 className="about-team-name">Kavana R J</h3>
+  </article>
+
+  <article className="about-team-card">
+    <div className="about-team-avatar" aria-label="Prajwal R">PR</div>
+    <h3 className="about-team-name">Prajwal R</h3>
+  </article>
+
+  {/* New Team Member */}
+  <article className="about-team-card">
+    <div className="about-team-avatar" aria-label="Rakesh I S">RS</div>
+    <h3 className="about-team-name">Rakesh I S</h3>
+  </article>
+</div>
+
         </section>
 
         {/* Accessibility and trust */}
